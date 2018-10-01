@@ -19,6 +19,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import red from '@material-ui/core/colors/red';
 
 const chats = [
   {
@@ -71,6 +72,9 @@ const styles = theme => ({
   },
   'appBar-right': {
     marginRight: 320,
+  },
+  avatar: {
+    backgroundColor: red[500],
   },
   drawerPaper: {
     position: 'relative',
@@ -203,7 +207,7 @@ class PermanentDrawer extends React.Component {
             <Toolbar>
               
               <Typography variant="title" color="inherit" noWrap>
-                React Chat
+               React Chat
               </Typography>
             </Toolbar>
           </AppBar>
@@ -223,14 +227,14 @@ class PermanentDrawer extends React.Component {
           </div>
           <Divider />                  
           <List className={classes.listChart}>            
-            {chats.map(chat => (
+            {chats.map((chat,i) => (
                <ListItem
-               key={chat.name}
+               key={i}
                button              
              >
-               <Avatar>
-                 <ImageIcon />
-               </Avatar>
+               <Avatar aria-label="Recipe" className={classes.avatar}>
+               {chat.name[0].toUpperCase()}
+              </Avatar>
                <ListItemText primary={chat.name} secondary={chat.date} />
              </ListItem> 
             ))}
