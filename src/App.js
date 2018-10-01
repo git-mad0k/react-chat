@@ -9,8 +9,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess'
+import classnames  from 'classnames'
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import RestoreIcon from '@material-ui/icons/Restore';
@@ -20,37 +19,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import red from '@material-ui/core/colors/red';
-
-const chats = [
-  {
-    name: 'test1',
-    date: 'an hour ago'
-  },
-  {
-    name: 'test2',
-    date: 'an hour ago'
-  },
-  {
-    name: 'test3',
-    date: 'an hour ago'
-  },
-  {
-    name: 'test4',
-    date: 'an hour ago'
-  },
-  {
-    name: 'test5',
-    date: 'an hour ago'
-  },
-  {
-    name: 'test6',
-    date: 'an hour ago'
-  },
-  {
-    name: 'test7',
-    date: 'an hour ago'
-  },
-]
+import {chats, messages} from "./mock-data.json";
+import titleInitilals from './utils/title-initials'
 
 const styles = theme => ({
   root: {
@@ -90,6 +60,7 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
+    overflowX: 'auto'
 
   },
   input: {
@@ -112,19 +83,15 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column'
   },
-  message: {
+  messageWrapper: {
     display: 'flex',
     margin: '1rem 0.8rem',
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     alignItems: 'center'    
   },
 
-  message_current: {
-    alignSelf: 'flex-end',
-    display: 'flex',
-    margin: '1rem 0.8rem',
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    alignItems: 'center',
+  messageWrapperForMe: {
+    alignSelf: 'flex-end',    
     flexDirection: 'row-reverse',     
   },
   
@@ -132,12 +99,12 @@ const styles = theme => ({
      marginLeft: '1rem',
      padding: '0.5rem',
      fontSize: '0.875rem',  
+     minWidth: '70px',
+     maxWidth: '450px',
   },
   
-  message_current__container: {
-    marginRight: '1rem',
-    padding: '0.5rem',
-    fontSize: '0.875rem',  
+  message__containerForMe: {    
+    marginRight: '1rem',   
   },
 
   message__author: {
@@ -232,8 +199,8 @@ class PermanentDrawer extends React.Component {
                key={i}
                button              
              >
-               <Avatar aria-label="Recipe" className={classes.avatar}>
-               {chat.name[0].toUpperCase()}
+               <Avatar aria-label="Recipe" className={classes.avatar}>               
+               {titleInitilals(chat.name)}
               </Avatar>
                <ListItemText primary={chat.name} secondary={chat.date} />
              </ListItem> 
@@ -244,8 +211,7 @@ class PermanentDrawer extends React.Component {
               <AddIcon />
             </Button>
           </div>
-
-          <Divider />
+          
           <BottomNavigation            
             showLabels
             className={classes.bottom}
@@ -258,42 +224,24 @@ class PermanentDrawer extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <div className={classes.messages}>
-            <div className={classes.message}>
-              <div className="list__avatar">
-                <Avatar>
-                  <BeachAccessIcon />
-                </Avatar>
-              </div>
-              <Paper className={classes.message__container}>
-                <div className={classes.message__author}>test</div>
-                <div className={classes.message__text}>Lororemmamsd asdmasd asd</div>
-                <div className={classes.message__date}>3 days ago</div>
+          {messages && messages.map((message, i) => {
+            const isMessageForMe = message.sender === "me"
+            console.log(isMessageForMe, message.sender)
+            return (
+            <div key={i} className={classnames(classes.messageWrapper, isMessageForMe && classes.messageWrapperForMe )}>
+              <Avatar>              
+              {titleInitilals(message.name)}
+              </Avatar>
+              <Paper className={classnames (classes.message__container, isMessageForMe && classes.message__containerForMe ) }>
+                <div className={classes.message__author}>{message.name}</div>
+                <div className={classes.message__text}>{message.content}</div>
+                <div className={classes.message__date}>{message.date}</div>
               </Paper>
             </div>
-            <div className={classes.message_current}>
-              <div className="list__avatar">
-                <Avatar>
-                  <BeachAccessIcon />
-                </Avatar>
-              </div>
-              <Paper className={classes.message_current__container}>
-                <div className={classes.message__author}>test</div>
-                <div className={classes.message__text}>Lororemmamsd asdmasd asd</div>
-                <div className={classes.message__date}>3 days ago</div>
-              </Paper>
-            </div>
-            <div className={classes.message}>
-              <div className="list__avatar">
-                <Avatar>
-                  <BeachAccessIcon />
-                </Avatar>
-              </div>
-              <Paper className={classes.message__container}>
-                <div className={classes.message__author}>test</div>
-                <div className={classes.message__text}>Lororemmamsd asdmasd asd</div>
-                <div className={classes.message__date}>3 days ago</div>
-              </Paper>
-            </div>
+          )})}
+          
+            
+            
             <div className={classes.userStatus}>
               <div className={classes.user__name}>
                 testuser <span className={classes.user__status}>joined</span> 

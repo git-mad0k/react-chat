@@ -1,0 +1,124 @@
+{
+  "chats": [
+    {
+      "name": "Harvey Mos",
+      "date": "an hour ago"
+    },
+    {
+      "name": "Marjorie Atnip",
+      "date": "an hour ago"
+    },
+    {
+      "name": "test3",
+      "date": "an hour ago"
+    },
+    {
+      "name": "test4",
+      "date": "an hour ago"
+    },
+    {
+      "name": "test5",
+      "date": "an hour ago"
+    },
+    {
+      "name": "test6",
+      "date": "an hour ago"
+    },
+    {
+      "name": "test7",
+      "date": "an hour ago"
+    }
+  ],
+  "messages": [
+    {
+      "sender": "someone",
+      "name": "Harvey Mos",
+      "content": "Hello, World!",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "someone",
+      "name": "Harvey Mos",
+      "content": "Here's my very first message...",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "me",
+      "name": "Test",
+      "content": "Oh, hi 👋🏻",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "me",
+      "name": "Harvey Mos",
+      "content": "What's up?",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "me",
+      "name": "Harvey Mos",
+      "content": "Everything is up, buddy 😎",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "someone",
+      "name": "Harvey Mos",
+      "content": "Neat 👍🏻\nKeep rocking",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "someone",
+      "name": "Harvey Mos",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "me",
+      "name": "Harvey Mos",
+      "content": "What's that?",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "someone",
+      "name": "Harvey Mos",
+      "content": "That's a HUUUUUGGGEEEE message!!11",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "me",
+      "name": "Harvey Mos",
+      "content": "LOL",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "someone",
+      "name": "Harvey Mos",
+      "content": "Wanna more?",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "me",
+      "name": "Harvey Mos",
+      "content": "Sure 😁",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "someone",
+      "name": "Harvey Mos",
+      "content": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "me",
+      "name": "Harvey Mos",
+      "content": "I can do this too!",
+      "date": "an hour ago"
+    },
+    {
+      "sender": "me",
+      "name": "Harvey Mos",
+      "content": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.",
+      "date": "an hour ago"
+    }
+  ]
+}
