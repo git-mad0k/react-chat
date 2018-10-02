@@ -15,7 +15,7 @@ const styles = theme => ({
 
 const NewChat = ({ classes }) => (
   <div className={classes.newChatWrapper}>
-      <Button variant="fab" color="primary" aria-label="Add">
+      <Button variant="fab" color="secondary" aria-label="Add">
         <AddIcon />
       </Button>
     </div>
