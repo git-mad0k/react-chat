@@ -15,14 +15,10 @@ const styles = theme => ({
 })
 
 const SidebarMenu = ({ classes }) => (
-  <BottomNavigation
-    showLabels
-    className={classes.bottom}
-  >
+  <BottomNavigation showLabels className={classes.bottom}>
     <BottomNavigationAction label="My Charts" icon={<RestoreIcon />} />
     <BottomNavigationAction label="Explore" icon={<ExploreIcon />} />
-
   </BottomNavigation>
-)
+);
 
 export default withStyles(styles)(SidebarMenu)

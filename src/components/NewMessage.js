@@ -16,16 +16,16 @@ const styles = theme => ({
 
 const NewMessage = ({ classes }) => (
   <div className={classes.new__message}>
-  <Paper>
-    <TextField
-      id="standard-full-width"
-      style={{ padding: 8 }}
-      placeholder="Type your message..."
-      fullWidth
-      margin="normal"
-    />
-  </Paper>
-</div>
+    <Paper>
+      <TextField
+        id="standard-full-width"
+        style={{ padding: 8 }}
+        placeholder="Type your message..."
+        fullWidth
+        margin="normal"
+      />
+    </Paper>
+  </div>
 )
 
 export default withStyles(styles)(NewMessage)

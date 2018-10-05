@@ -36,38 +36,37 @@ const styles = theme => ({
   },
 })
 
-class MessageList extends React.Component  {
-componentDidMount() {
-  this.scrollDownHistory()
-}
-
-componentDidUpdate() {
-  this.scrollDownHistory()
-}
-
-scrollDownHistory() {
-  const messagesWrapper = this.refs.messagesWrapper
-  console.log(messagesWrapper)
-  if (messagesWrapper) {
-    messagesWrapper.scrollTop = messagesWrapper.scrollHeight
+class MessageList extends React.Component {
+  componentDidMount() {
+    this.scrollDownHistory()
   }
-}
-  render(){
+
+  componentDidUpdate() {
+    this.scrollDownHistory()
+  }
+
+  scrollDownHistory() {
+    const messagesWrapper = this.refs.messagesWrapper
+    console.log(messagesWrapper)
+    if (messagesWrapper) {
+      messagesWrapper.scrollTop = messagesWrapper.scrollHeight
+    }
+  }
+  render() {
     const { classes, messages } = this.props
-  return (
-  <div className={classes.messagesWrapper} ref="messagesWrapper">
-          {messages && messages.map((message, i) => 
-            <MessageItem message={message} key={i} />
-          )}
-          <div className={classes.userStatus}>
-            <div className={classes.user__name}>
-              testuser <span className={classes.user__status}>joined</span>
-            </div>
-            <div className={classes.user__date_visit}>
-              2 days ago
-              </div>
+    return (
+      <div className={classes.messagesWrapper} ref="messagesWrapper">
+        {messages && messages.map((message, i) =>
+          <MessageItem message={message} key={i} />
+        )}
+        <div className={classes.userStatus}>
+          <div className={classes.user__name}>
+            testuser <span className={classes.user__status}>joined</span>
           </div>
+          <div className={classes.user__date_visit}> 2 days ago </div>
         </div>
-)}
+      </div>
+    )
+  }
 }
 export default withStyles(styles)(MessageList)

@@ -18,19 +18,19 @@ const styles = theme => ({
   },
 })
 
-const Sidebar = ({ classes, chats }) =>  (
+const Sidebar = ({ classes, chats }) => (
   <Drawer
     variant="permanent"
     classes={{
-      paper: classes.drawerPaper,
+      paper: classes.drawerPaper
     }}
   >
     <SidebarSearch />
     <Divider />
-    <ChatList chats={chats} />    
+    <ChatList chats={chats} />
     <NewChat />
-   <SidebarMenu />
+    <SidebarMenu />
   </Drawer>
-)
+);
 
 export default withStyles(styles)(Sidebar)

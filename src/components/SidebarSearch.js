@@ -15,11 +15,11 @@ const styles = theme => ({
 
 const SidebarSearch = ({ classes }) => (
   <div className={classes.toolbar}>
-  <TextField
-    placeholder="Search charts..."
-    className={classes.input}
-    margin="normal"
-  />
+    <TextField
+      placeholder="Search charts..."
+      className={classes.input}
+      margin="normal"
+    />
 </div>
 )
 
