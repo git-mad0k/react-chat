@@ -11,12 +11,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = theme => ({
   layout: {
-    width: "auto",
+    width: "auto",    
     display: "block", // Fix IE11 issue.
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
+      width: 600,      
       marginLeft: "auto",
       marginRight: "auto"
     }
@@ -24,8 +24,10 @@ const styles = theme => ({
   paper: {
     marginTop: theme.spacing.unit * 8,
     display: "flex",
+    minHeight: 450,
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: 'space-around',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 3}px`
   },
@@ -60,7 +62,7 @@ class WelcomePage extends React.Component {
           <Paper className={classes.paper}>
             <AppBar position="static">  
               <Tabs value={tab} onChange={this.handleChange} fullWidth>
-                <Tab label="LoginPage" value="login"/>
+                <Tab label="Login Page" value="login"/>
                 <Tab label="Register" value="register"/>               
               </Tabs>              
             </AppBar>
