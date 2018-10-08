@@ -1,16 +1,13 @@
 import React from 'react'
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import LockIcon from "@material-ui/icons/LockOutlined";
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import LoginPage from './LoginPage'
+import RegisterPage from './RegisterPage'
+
 import withStyles from "@material-ui/core/styles/withStyles";
+
 
 const styles = theme => ({
   layout: {
@@ -47,94 +44,28 @@ const styles = theme => ({
 
 class WelcomePage extends React.Component {
   state = {
-    login: "",
-    password: "",
-    remember: false
+   tab: 'login'
   };
 
-  handlerFormInput = e => {
-    const { id, value } = e.currentTarget;
-    this.setState({ [id]: value });
-  };
-
-  handlerChecked = e => {
-    const { id, checked } = e.currentTarget;
-    this.setState({ [id]: checked });
-  };
-
-  submitForm = e => {
-    e.preventDefault()
-    console.log('send', {
-      ...this.state
-    })
-    this.setState({login:"", password: "", remember: false })
+  handleChange = (e, value) => {
+    this.setState({ tab: value })
   }
 
-  validate = () => {
-    const { login, password } = this.state;
-    if (login.length && password.length) {
-      return true;
-    }
-    return false;
-  };
   render() {
     const { classes } = this.props;
+    const { tab } = this.state
     return (
-      <React.Fragment>
-        <CssBaseline />
+      <React.Fragment>        
         <main className={classes.layout}>
           <Paper className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockIcon />
-            </Avatar>
-            <Typography variant="display1">Sign in</Typography>
-            <form className={classes.form}>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="login">Login</InputLabel>
-                <Input
-                  id="login"
-                  name="login"
-                  autoComplete="login"
-                  onChange={this.handlerFormInput}
-                  value={this.state.login}
-                  autoFocus
-                />
-              </FormControl>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
-                  name="password"
-                  type="password"
-                  id="password"
-                  onChange={this.handlerFormInput}
-                  value={this.state.password}
-                  autoComplete="current-password"
-                />
-              </FormControl>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="remember"
-                    color="primary"
-                    id="remember"
-                    onChange={this.handlerChecked}
-                    checked={this.state.remember}
-                  />
-                }
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="raised"
-                color="primary"
-                className={classes.submit}
-                disabled={!this.validate()}
-                onClick={this.submitForm}
-              >
-                Sign in
-              </Button>
-            </form>
+            <AppBar position="static">  
+              <Tabs value={tab} onChange={this.handleChange} fullWidth>
+                <Tab label="LoginPage" value="login"/>
+                <Tab label="Register" value="register"/>               
+              </Tabs>              
+            </AppBar>
+            {tab === 'login' && <LoginPage />}
+            {tab === 'register' && <RegisterPage />}
           </Paper>
         </main>
       </React.Fragment>
