@@ -2,39 +2,37 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import MessageItem from './MessgaeItem'
 
-
 const styles = theme => ({
   messagesWrapper: {
-    paddingTop: '56px',
-    overflowX: 'auto',
-    paddingBottom: '100px',
-    width: '100%',
-    height: '100%',
+    paddingTop: "56px",
+    overflowX: "auto",
+    paddingBottom: "130px",
+    width: "100%",
+    height: "100%"
   },
-
   userStatus: {
-    alignSelf: 'center',
-    display: 'flex',
-    margin: '1rem 0.8rem',
+    alignSelf: "center",
+    display: "flex",
+    margin: "1rem 0.8rem",
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontSize: '0.875rem',
-    fontWeight: '400',
-    textAlign: 'center',
-    flexDirection: 'column'
+    fontSize: "0.875rem",
+    fontWeight: "400",
+    textAlign: "center",
+    flexDirection: "column"
   },
   user__name: {
-    fontSize: '1em',
-    color: "green",
+    fontSize: "1em",
+    color: "green"
   },
   user__status: {
-    fontSize: '1em',
-    color: '#000'
+    fontSize: "1em",
+    color: "#000"
   },
   user__date_visit: {
-    fontSize: '0.875em',
-    color: 'rgb(96, 125, 139)',
-  },
-})
+    fontSize: "0.875em",
+    color: "rgb(96, 125, 139)"
+  }
+});
 
 class MessageList extends React.Component {
   componentDidMount() {
