@@ -90,7 +90,7 @@ export function login(username, password) {
 
 export function logout() {
   return (dispatch) => {
-    localStorage.setItem('token','')
+    localStorage.removeItem('token')
     dispatch({
       type: LOGOUT_SUCCESS
     })
