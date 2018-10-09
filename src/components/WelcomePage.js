@@ -7,6 +7,7 @@ import LoginPage from './LoginPage'
 import RegisterPage from './RegisterPage'
 
 import withStyles from "@material-ui/core/styles/withStyles";
+import { Redirect } from 'react-router-dom'
 
 
 const styles = theme => ({
@@ -54,8 +55,12 @@ class WelcomePage extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, login, singup, isAuthenticated } = this.props;
     const { tab } = this.state
+
+    if (isAuthenticated) {
+      return <Redirect to={'/chat'} />
+    }
     return (
       <React.Fragment>        
         <main className={classes.layout}>
@@ -66,8 +71,8 @@ class WelcomePage extends React.Component {
                 <Tab label="Register" value="register"/>               
               </Tabs>              
             </AppBar>
-            {tab === 'login' && <LoginPage />}
-            {tab === 'register' && <RegisterPage />}
+            {tab === 'login' && <LoginPage onSubmit={login} />}
+            {tab === 'register' && <RegisterPage onSubmit={singup} />}
           </Paper>
         </main>
       </React.Fragment>

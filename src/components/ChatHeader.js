@@ -25,7 +25,7 @@ const styles = theme => ({
   },
 });
 
-const ChatHeader = ({ classes }) => (
+const ChatHeader = ({ classes, onClick }) => (
   <AppBar position="absolute" className={classes.appBar}>
     <Toolbar>
       <AvatarProfile name={"React Chat"} color={"red"} />
@@ -36,6 +36,7 @@ const ChatHeader = ({ classes }) => (
         <IconButton          
           aria-haspopup="true"          
           color="inherit"
+          onClick={onClick}
         >
           <AccountCircle />
         </IconButton>        

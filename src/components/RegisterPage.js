@@ -5,7 +5,7 @@ import LockIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
-import fetch from 'isomorphic-fetch'
+
 
 const styles = theme => ({
   avatar: {
@@ -57,27 +57,12 @@ class RegisterPage extends React.Component {
       console.log('Passwords do not match')
       return;
     } 
-
-    console.log('send', {
-      ...this.state
-    })
+        
     const { username, password } = this.state
 
-    fetch('http://localhost:8000/v1/signup', {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: username.value,
-        password: password.value
-      }),
-    }).then((res) => res.json())
-    .then(json => console.log(json))
-    .catch(reason => console.err(reason))
-  }
+    this.props.onSubmit(username.value, password.value)
 
+  }
   validatePassword = () => {
     const { password, repeatPassword } = this.state;
     const isValid = password.value === repeatPassword.value;

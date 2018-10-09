@@ -51,9 +51,10 @@ class LoginPage extends React.Component {
 
   submitForm = e => {
     e.preventDefault()
-    console.log('send', {
-      ...this.state
-    })
+
+    const { username, password } = this.state
+    this.props.onSubmit(username.value, password.value )
+
     this.setState({
       username: {
         value: '',
@@ -65,6 +66,7 @@ class LoginPage extends React.Component {
       },
      
     })
+
   }
 
   validate = () => {

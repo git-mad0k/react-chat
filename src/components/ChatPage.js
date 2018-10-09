@@ -7,6 +7,8 @@ import Chat from './Chat'
 import blue from '@material-ui/core/colors/blue'
 import red from '@material-ui/core/colors/red'
 import pink from '@material-ui/core/colors/pink'
+import { Redirect } from 'react-router-dom';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -46,14 +48,27 @@ const styles = theme => ({
   },
 });
 
-const ChatPage = ({classes}) => (
-        <MuiThemeProvider theme={theme}>
+class ChatPage extends React.Component {
+
+  logOutHandler = e => {
+    e.persist()
+    this.props.logout()    
+  }
+  render() {
+    const { classes, isAuthenticated } = this.props
+    if (!isAuthenticated) {
+      return (<Redirect to="/" />)
+    }
+    return (
+      <MuiThemeProvider theme={theme}>
         <div className={classes.appFrame}>
-          <ChatHeader />
+          <ChatHeader onClick={this.logOutHandler} />
           <Sidebar chats={chats} />
           <Chat messages={messages} />
         </div>
       </MuiThemeProvider>
-)
+    )
+  }
+}
 
 export default withStyles(styles)(ChatPage)
