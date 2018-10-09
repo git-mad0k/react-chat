@@ -40,26 +40,24 @@ class RegisterPage extends React.Component {
 
   handlerFormInput = e => {
     e.persist()
-    const { name, value } = e.currentTarget;   
+    const { name, value } = e.currentTarget;      
     this.setState((prevState) => ({
       [name]: {
         ...prevState[name],
          value
        } 
-    }))
+    }))   
   };
 
   submitForm = e => {
-    e.preventDefault()
-    
+    e.preventDefault()   
 
     if (!this.validatePassword()) {
       console.log('Passwords do not match')
       return;
     } 
-        
-    const { username, password } = this.state
 
+    const { username, password } = this.state
     this.props.onSubmit(username.value, password.value)
 
   }
@@ -115,7 +113,7 @@ class RegisterPage extends React.Component {
             autoComplete="new-password"
             required
             fullWidth
-            label={'New password'}
+            label={'New password'}            
           />
         
           <TextField 
