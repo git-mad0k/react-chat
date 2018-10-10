@@ -26,7 +26,15 @@ const theme = createMuiTheme({
       dark: pink[700],
     },
     error: red,
+    action: {
+      active: '#000',
+      disabled: '#fff',
+      disabledBackground: blue[100],
+      cursor: 'disabled',
+      selected: '#000',
+    },
   },
+  
   typography: {
     fontSize: 14,
   }

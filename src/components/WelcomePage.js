@@ -11,6 +11,10 @@ import { Redirect } from 'react-router-dom'
 
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    height: '80%'
+  },
   layout: {
     width: "auto",    
     display: "block", // Fix IE11 issue.
@@ -21,11 +25,7 @@ const styles = theme => ({
       marginLeft: "auto",
       marginRight: "auto"
     }
-  },
-  root: {
-    flexGrow: 1,
-    height: '80%'
-  },
+  },  
   indicator: {
     backgroundColor: theme.palette.primary.dark
   },
