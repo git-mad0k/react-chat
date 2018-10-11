@@ -7,7 +7,7 @@ import ChatItem from './ChatItem'
 const styles = theme => ({
   chatList: {
     height: `calc(100% - 56px)`,
-    overflowY: 'scroll',
+    overflowY: 'auto',
     flex: '1 1 auto'
   },
 })
