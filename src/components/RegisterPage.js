@@ -5,7 +5,7 @@ import LockIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
-
+import { Field, reduxForm } from 'redux-form'
 
 const styles = theme => ({
   avatar: {
@@ -17,132 +17,98 @@ const styles = theme => ({
     marginTop: theme.spacing.unit
   },
   submit: {
-    marginTop: theme.spacing.unit * 3,    
+    marginTop: theme.spacing.unit * 3,
   }
 });
 
-class RegisterPage extends React.Component {
+const RegisterPage = ({ classes, onSubmit, handleSubmit }) => {
 
-  state = {
-    username: {
-      value: '',
-      isValid: true,
-    },
-    password: {
-      value: '',
-      isValid: true,
-    },
-    repeatPassword: {
-      value: '',
-      isValid: true,
-    },    
-  };
-
-  handlerFormInput = e => {
-    e.persist()
-    const { name, value } = e.currentTarget;      
-    this.setState((prevState) => ({
-      [name]: {
-        ...prevState[name],
-         value
-       } 
-    }))   
-  };
-
-  submitForm = e => {
-    e.preventDefault()   
-
-    if (!this.validatePassword()) {
-      console.log('Passwords do not match')
-      return;
-    } 
-
-    const { username, password } = this.state
-    this.props.onSubmit(username.value, password.value)
-
-  }
-  validatePassword = () => {
-    const { password, repeatPassword } = this.state;
-    const isValid = password.value === repeatPassword.value;
-
-    this.setState({
-      password: { ...password, isValid },
-      repeatPassword: { ...repeatPassword, isValid },
-    });
-
-    return isValid;
+  const submitForm = values => {
+    const { username, password } = values
+    onSubmit(username, password)
   }
 
-  validate = () => {
-    const { username, password, repeatPassword } = this.state;
-    if (username.value.length && password.value.length && repeatPassword.value.length) {      
-      return true      
-    }    
-    return false;
-  };
+  return (
+    <React.Fragment>
+      <Avatar className={classes.avatar}>
+        <LockIcon />
+      </Avatar>
+      <Typography variant="display1">Sign up</Typography>
+      <form className={classes.form} onSubmit={handleSubmit(submitForm)}>
+        <Field
+          name="username"
+          component={renderTextField}
+          label={"Login"}
+          placeholder={'Enter your login'}
+          autoComplete="username"
+          fullWidth
+        />
+        <Field
+          name="password"
+          component={renderTextField}
+          label={'New password'}
+          placeholder={'Enter your password'}
+          autoComplete="new-password"
+          fullWidth
+          type="password"
+        />
+        <Field
+          name="repeatPassword"
+          component={renderTextField}
+          label={'Reapeat password'}
+          placeholder={'Repaet your password'}
+          type="password"
+          autoComplete="new-password"
+          fullWidth
+        />
 
-  render() {
-    const { classes } = this.props;
-    const { username, password, repeatPassword } = this.state
-    return (
-      <React.Fragment>
-        <Avatar className={classes.avatar}>
-          <LockIcon />
-        </Avatar>
-        <Typography variant="display1">Sign up</Typography>
-        <form className={classes.form} onSubmit={this.submitForm}>          
-          <TextField
-            name="username"
-            placeholder={'Enter your login'}
-            type="text"
-            onChange={this.handlerFormInput}
-            value={username.value}
-            error={!username.isValid}
-            autoComplete="username"
-            required
-            fullWidth
-            label={'Login'}
-          />
-          <TextField
-            name="password"
-            placeholder={'Enter your password'}
-            type="password"
-            onChange={this.handlerFormInput}
-            value={password.value}
-            error={!password.isValid}
-            autoComplete="new-password"
-            required
-            fullWidth
-            label={'New password'}            
-          />
-        
-          <TextField 
-            name="repeatPassword"
-            placeholder={'Repaet your password'}
-            type="password"
-            onChange={this.handlerFormInput}
-            value={repeatPassword.value}
-            error={!repeatPassword.isValid}
-            autoComplete="new-password"
-            required
-            fullWidth
-            label={'Reapeat password'}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="raised"
-            color="primary"
-            className={classes.submit}
-            disabled={!this.validate()}           
-          >
-            Sign up
+        <Button
+          type="submit"
+          fullWidth
+          variant="raised"
+          color="primary"
+          className={classes.submit}
+        >
+          Sign up
               </Button>
-        </form>
-      </React.Fragment>
-    );
-  }
+      </form>
+    </React.Fragment>
+  )
 }
 
 
-export default withStyles(styles)(RegisterPage)
+
+const renderTextField = ({
+  input,
+  label,
+  meta: { touched, error },
+  ...custom
+}) => (
+    <TextField
+      label={label}
+      helperText={touched && error}
+      error={touched && error ? true : false}
+      {...input}
+      {...custom}
+    />
+  )
+
+const validate = ({ username, password, repeatPassword }) => {
+  const errors = {}
+
+  if (!username) errors.username = 'Login  is reuired'
+  else if (!/^[A-Za-z0-9_ \b]*$/.test(username)) errors.username = 'Allow only latin and numbers'
+
+  if (!password) errors.password = 'Password  is reuired'
+
+  if (password !== repeatPassword) {
+    errors.password = 'Passwords  not matches'
+    errors.repeatPassword = 'Passwords  not matches'
+  }
+  return errors
+}
+
+export default withStyles(styles)(reduxForm({
+  form: 'singup',
+  validate
+})(RegisterPage))

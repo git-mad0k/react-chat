@@ -8,7 +8,7 @@ const enhancer = applyMiddleware(thunkMiddleware, logger)
 const configureStore = () => {
   return createStore(
     rootReducer,
-    enhancer
+    enhancer    
   )
 }
 
