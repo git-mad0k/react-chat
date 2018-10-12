@@ -5,9 +5,6 @@ import AvatarProfile from './AvatarProfile'
 import { withStyles } from '@material-ui/core/styles'
 
 
-const styles = theme => ({
-
-})
 
 const ChatItem = ({ classes, name, color, date, key }) => (
   <ListItem key={key} button>
@@ -16,4 +13,4 @@ const ChatItem = ({ classes, name, color, date, key }) => (
   </ListItem>
 )
 
-export default withStyles(styles)(ChatItem)
+export default withStyles()(ChatItem)
