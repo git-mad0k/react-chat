@@ -4,8 +4,9 @@ import Button from "@material-ui/core/Button";
 import LockIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import TextField from '@material-ui/core/TextField';
-import { Field, reduxForm } from 'redux-form'
+import TextField from './Forms/TextField'
+import { Form, Field } from 'react-final-form'
+
 
 const styles = theme => ({
   avatar: {
@@ -13,7 +14,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE11 issue.
+    width: "100%",
     marginTop: theme.spacing.unit
   },
   submit: {
@@ -34,10 +35,15 @@ const SignUp = ({ classes, onSubmit, handleSubmit }) => {
         <LockIcon />
       </Avatar>
       <Typography variant="display1">Sign up</Typography>
-      <form className={classes.form} onSubmit={handleSubmit(submitForm)}>
+      <Form 
+        onSubmit={submitForm}
+        initialValues={{ employed: true, stooge: 'larry' }}
+        validate={validate}
+        render={({ handleSubmit, reset, submitting, pristine, values }) => (
+      <form className={classes.form} onSubmit={handleSubmit}>
         <Field
           name="username"
-          component={renderTextField}
+              component={TextField}
           label={"Login"}
           placeholder={'Enter your login'}
           autoComplete="username"
@@ -45,7 +51,7 @@ const SignUp = ({ classes, onSubmit, handleSubmit }) => {
         />
         <Field
           name="password"
-          component={renderTextField}
+              component={TextField}
           label={'New password'}
           placeholder={'Enter your password'}
           autoComplete="new-password"
@@ -54,7 +60,7 @@ const SignUp = ({ classes, onSubmit, handleSubmit }) => {
         />
         <Field
           name="repeatPassword"
-          component={renderTextField}
+              component={TextField}
           label={'Reapeat password'}
           placeholder={'Repaet your password'}
           type="password"
@@ -68,30 +74,20 @@ const SignUp = ({ classes, onSubmit, handleSubmit }) => {
           variant="raised"
           color="primary"
           className={classes.submit}
+          disabled={submitting || pristine}
         >
           Sign up
               </Button>
       </form>
+        )}
+      />
     </React.Fragment>
   )
 }
 
 
 
-const renderTextField = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) => (
-    <TextField
-      label={label}
-      helperText={touched && error}
-      error={touched && error ? true : false}
-      {...input}
-      {...custom}
-    />
-  )
+
 
 const validate = ({ username, password, repeatPassword }) => {
   const errors = {}
@@ -108,7 +104,4 @@ const validate = ({ username, password, repeatPassword }) => {
   return errors
 }
 
-export default withStyles(styles)(reduxForm({
-  form: 'singup',
-  validate
-})(SignUp))
+export default withStyles(styles)(SignUp)
