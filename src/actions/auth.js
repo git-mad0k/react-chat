@@ -1,13 +1,9 @@
-import {
-  SINGUP_REQUEST, SINGUP_SUCCESS, SINGUP_FAILURE,
-  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
-  LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE,
-} from '../constants'
+import * as types from '../constants'
 
 export function signup(username, password) {
   return (dispatch) => {
     dispatch({
-      type: SINGUP_REQUEST,
+      type: types.SINGUP_REQUEST,
     })
     return fetch('http://localhost:8000/v1/signup', {
       method: "POST",
@@ -33,13 +29,13 @@ export function signup(username, password) {
         }
         localStorage.setItem('token', json.token) 
         dispatch({
-          type: SINGUP_SUCCESS,
+          type: types.SINGUP_SUCCESS,
           payload: json
         })
       }
       )
       .catch(reason => dispatch({
-        type: SINGUP_FAILURE,
+        type: types.SINGUP_FAILURE,
         payload: reason
       }))
   }
@@ -49,7 +45,7 @@ export function signup(username, password) {
 export function login(username, password) {
   return (dispatch) => {
     dispatch({
-      type: LOGIN_REQUEST,
+      type: types.LOGIN_REQUEST,
     })
     return fetch('http://localhost:8000/v1/login', {
       method: "POST",
@@ -75,13 +71,13 @@ export function login(username, password) {
       }
       localStorage.setItem('token',json.token)
       dispatch({
-        type: SINGUP_SUCCESS,
+        type: types.SINGUP_SUCCESS,
         payload: json
       })}
     )
       
     .catch(reason => dispatch({
-        type: SINGUP_FAILURE,
+      type: types.SINGUP_FAILURE,
         payload: reason
       }))
   }
@@ -92,7 +88,47 @@ export function logout() {
   return (dispatch) => {
     localStorage.removeItem('token')
     dispatch({
-      type: LOGOUT_SUCCESS
+      type: types.LOGOUT_SUCCESS
     })
+  }
+}
+
+export function recieveAuth() {
+  return (dispatch, getState) => {
+    const { token } = getState().auth
+
+    if (!token) {
+      dispatch({
+        type: types.RECIEVE_AUTH_FAILURE,
+      })
+    }
+
+    return fetch('http://localhost:8000/v1/users/me', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then((res) => res.json())
+    .then(json => {
+      if (json.success) {
+        return json
+      }
+      throw new Error(json.message)
+    })
+    .then(json => {
+      dispatch({
+        type: types.RECIEVE_AUTH_SUCCESS,
+        payload: json
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: types.RECIEVE_AUTH_FAILURE,
+        payload: error
+      })
+    })
+    
   }
 }
