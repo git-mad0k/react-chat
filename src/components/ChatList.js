@@ -7,7 +7,7 @@ import ChatItem from './ChatItem'
 const styles = theme => ({
   chatList: {
     height: `calc(100% - 56px)`,
-    overflowY: 'auto',
+    overflowY: 'scroll',
     flex: '1 1 auto'
   },
 })
@@ -15,7 +15,7 @@ const styles = theme => ({
 const ChatList = ({ classes, chats }) => (
   <List className={classes.chatList}>
     {chats.map((chat, i) => (
-      <ChatItem {...chat} key={i} />
+      <ChatItem chat={chat} key={i} />
     ))}
   </List>
 )

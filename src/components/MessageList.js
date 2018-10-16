@@ -1,6 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import MessageItem from './MessageItem'
+import MessageItem from './MessgaeItem'
 
 const styles = theme => ({
   messagesWrapper: {
@@ -10,7 +10,7 @@ const styles = theme => ({
     width: "100%",
     height: "100%"
   },
-  userStatusWrapper: {
+  userStatus: {
     alignSelf: "center",
     display: "flex",
     margin: "1rem 0.8rem",
@@ -20,15 +20,15 @@ const styles = theme => ({
     textAlign: "center",
     flexDirection: "column"
   },
-  userName: {
+  user__name: {
     fontSize: "1em",
     color: "green"
   },
-  userStatus: {
+  user__status: {
     fontSize: "1em",
     color: "#000"
   },
-  userDateVisit: {
+  user__date_visit: {
     fontSize: "0.875em",
     color: "rgb(96, 125, 139)"
   }
@@ -44,7 +44,8 @@ class MessageList extends React.Component {
   }
 
   scrollDownHistory() {
-    const messagesWrapper = this.refs.messagesWrapper    
+    const messagesWrapper = this.refs.messagesWrapper
+    console.log(messagesWrapper)
     if (messagesWrapper) {
       messagesWrapper.scrollTop = messagesWrapper.scrollHeight
     }
@@ -56,11 +57,11 @@ class MessageList extends React.Component {
         {messages && messages.map((message, i) =>
           <MessageItem message={message} key={i} />
         )}
-        <div className={classes.userStatusWrapper}>
-          <div className={classes.userName}>
-            testuser <span className={classes.userStatus}>joined</span>
+        <div className={classes.userStatus}>
+          <div className={classes.user__name}>
+            testuser <span className={classes.user__status}>joined</span>
           </div>
-          <div className={classes.userDateVisit}> 2 days ago </div>
+          <div className={classes.user__date_visit}> 2 days ago </div>
         </div>
       </div>
     )
