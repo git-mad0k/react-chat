@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import { Router, Route, Switch, Redirect } from 'react-router-dom'
+import PrivateRoute from '../containers/PrivateRoute'
+import history from '../utils/history'
 import ChatPage from '../containers/ChatPage'
 import WelcomePage from '../containers/WelcomePage'
 import { Provider } from 'react-redux'
@@ -46,12 +48,12 @@ const styles = theme => ({
 
 const App = () => (
   <Provider store={store}>
-    <Router>
+    <Router history={history}>
       <MuiThemeProvider theme={theme}>
         <Switch>
           <Route exact path="/(welcome)?" component={WelcomePage} />
           <Route path="/welcome" component={WelcomePage} />
-          <Route path="/chat" component={ChatPage} />
+          <PrivateRoute path="/chat" component={ChatPage} />
           <Redirect to="/" />
         </Switch>
       </MuiThemeProvider>

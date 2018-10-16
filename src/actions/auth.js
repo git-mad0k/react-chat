@@ -93,13 +93,13 @@ export function logout() {
   }
 }
 
-export function recieveAuth() {
+export function receiveAuth() {
   return (dispatch, getState) => {
     const { token } = getState().auth
 
     if (!token) {
       dispatch({
-        type: types.RECIEVE_AUTH_FAILURE,
+        type: types.RECEIVE_AUTH_FAILURE,
       })
     }
 
@@ -119,13 +119,13 @@ export function recieveAuth() {
     })
     .then(json => {
       dispatch({
-        type: types.RECIEVE_AUTH_SUCCESS,
+        type: types.RECEIVE_AUTH_SUCCESS,
         payload: json
       })
     })
     .catch(error => {
       dispatch({
-        type: types.RECIEVE_AUTH_FAILURE,
+        type: types.RECEIVE_AUTH_FAILURE,
         payload: error
       })
     })

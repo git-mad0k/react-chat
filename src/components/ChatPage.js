@@ -4,7 +4,6 @@ import { chats, messages } from "../mock-data.json"
 import Sidebar from './Sidebar'
 import ChatHeader from './ChatHeader'
 import Chat from './Chat'
-import { Redirect } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -27,10 +26,7 @@ class ChatPage extends React.Component {
     this.props.logout()    
   }
   render() {
-    const { classes, isAuthenticated } = this.props
-    if (!isAuthenticated) {
-      return (<Redirect to="/" />)
-    }
+    const { classes } = this.props    
     return (
       <div className={classes.appFrame}>
         <ChatHeader onClick={this.logOutHandler} />

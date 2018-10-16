@@ -1,5 +1,5 @@
 import * as types from '../constants'
-import {Record} from 'immutable'
+import { Record } from 'immutable'
 
 const token = localStorage.getItem('token')
 
@@ -17,13 +17,13 @@ const auth = (state = new schemeRecord(), action) => {
           .set('isAuthenticated', true)
           .set('user', action.payload.user)
           .set('token', action.payload.token)
-    case types.RECIEVE_AUTH_SUCCESS: 
+    case types.RECEIVE_AUTH_SUCCESS: 
       return state
         .set('isAuthenticated', true)
         .set('user', action.payload.user)        
     case types.SINGUP_FAILURE:
     case types.LOGIN_FAILURE:
-    case types.RECIEVE_AUTH_FAILURE:
+    case types.RECEIVE_AUTH_FAILURE:
     case types.LOGOUT_SUCCESS:
       return state
         .set('isAuthenticated', false)
