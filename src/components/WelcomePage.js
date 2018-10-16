@@ -3,8 +3,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from "@material-ui/core/Paper";
-import LoginPage from './LoginPage'
-import RegisterPage from './RegisterPage'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
 import Grid from '@material-ui/core/Grid';
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Redirect } from 'react-router-dom'
@@ -62,7 +62,7 @@ class WelcomePage extends React.Component {
   }
 
   render() {
-    const { classes, login, singup, isAuthenticated } = this.props;
+    const { classes, login, signup, isAuthenticated } = this.props;
     const { tab } = this.state
 
     if (isAuthenticated) {
@@ -88,8 +88,8 @@ class WelcomePage extends React.Component {
                   <Tab label="Register" value="register" />
                 </Tabs>
               </AppBar>
-              {tab === 'login' && <LoginPage onSubmit={login} />}
-              {tab === 'register' && <RegisterPage onSubmit={singup} />}
+              {tab === 'login' && <SignIn onSubmit={login} />}
+              {tab === 'register' && <SignUp onSubmit={signup} />}
             </Paper>
           </Grid>
         </Grid>

@@ -21,7 +21,7 @@ const styles = theme => ({
   }
 });
 
-const RegisterPage = ({ classes, onSubmit, handleSubmit }) => {
+const SignUp = ({ classes, onSubmit, handleSubmit }) => {
 
   const submitForm = values => {
     const { username, password } = values
@@ -111,4 +111,4 @@ const validate = ({ username, password, repeatPassword }) => {
 export default withStyles(styles)(reduxForm({
   form: 'singup',
   validate
-})(RegisterPage))
+})(SignUp))

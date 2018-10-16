@@ -1,6 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import MessageItem from './MessgaeItem'
+import MessageItem from './MessageItem'
 
 const styles = theme => ({
   messagesWrapper: {

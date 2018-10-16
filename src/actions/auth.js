@@ -4,7 +4,7 @@ import {
   LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE,
 } from '../constants'
 
-export function singup(username, password) {
+export function signup(username, password) {
   return (dispatch) => {
     dispatch({
       type: SINGUP_REQUEST,
