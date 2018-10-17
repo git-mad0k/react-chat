@@ -1,22 +1,15 @@
 import * as types from '../constants'
+import callApi from '../utils/call-api';
 
 export function signup(username, password) {
   return (dispatch) => {
     dispatch({
       type: types.SINGUP_REQUEST,
     })
-    return fetch('http://localhost:8000/v1/signup', {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    return callApi('/signup', undefined, { method: "POST" }, {
         username,
-        password,
-      }),
-    })
-    .then((res) => res.json())
+        password
+      })
       .then(json => {
         if (json.success) {
           return json
@@ -47,18 +40,10 @@ export function login(username, password) {
     dispatch({
       type: types.LOGIN_REQUEST,
     })
-    return fetch('http://localhost:8000/v1/login', {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    return callApi('/login', undefined, { method: "POST"}, {
         username,
         password,
-      }),
-    })
-    .then((res) => res.json())
+      }) 
     .then(json => {
       if (json.success) {
         return json
@@ -103,20 +88,7 @@ export function receiveAuth() {
       })
     }
 
-    return fetch('http://localhost:8000/v1/users/me', {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
-    .then((res) => res.json())
-    .then(json => {
-      if (json.success) {
-        return json
-      }
-      throw new Error(json.message)
-    })
+    return callApi('/users/me', token)     
     .then(json => {
       dispatch({
         type: types.RECEIVE_AUTH_SUCCESS,
