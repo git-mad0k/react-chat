@@ -30,6 +30,6 @@ export const isMember = ( state, chat ) => {
   }
 }
 
-export const isChatMemeber = (state, chat) => {
+export const isChatMember = (state, chat) => {
   return isCreator(state,chat) || isMember(state, chat)
 }

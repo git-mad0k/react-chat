@@ -94,3 +94,4 @@ export default combineReducers({
 
 export const getChatId = (chat) => chat._id
 export const getByIds = (state, ids) => ids.map(id => state.byIds[id])
+export const getById = (state, id) => state.byIds[id];
