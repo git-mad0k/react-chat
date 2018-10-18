@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles'
 
+
 const styles = theme => ({
   newChatWrapper: {
     position: 'absolute',
@@ -13,11 +14,11 @@ const styles = theme => ({
   }
 })
 
-const NewChat = ({ classes }) => (
+const NewChat = ({ classes, handleOpen }) => (
   <div className={classes.newChatWrapper}>
-    <Button variant="fab" color="secondary" aria-label="Add">
+    <Button variant="fab" color="secondary" aria-label="Add" onClick={handleOpen}>
       <AddIcon />
-    </Button>
+      </Button>    
   </div>
 )
 

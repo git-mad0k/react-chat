@@ -12,10 +12,10 @@ const styles = theme => ({
   },
 })
 
-const ChatList = ({ classes, chats }) => (
+const ChatList = ({ classes, chats, joinChat }) => (
   <List className={classes.chatList}>
     {chats.map((chat, i) => (
-      <ChatItem {...chat} key={i}/>
+      <ChatItem {...chat} key={i} joinChat={() => joinChat(chat._id)} />
     ))}
   </List>
 )

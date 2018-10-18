@@ -1,8 +1,35 @@
-import  auth  from './auth';
+import auth  from './auth';
+import chats from './chats'
+import messages from './messages'
 import { combineReducers } from 'redux'
-import { reducer as form } from 'redux-form'
 
 export default combineReducers ({
   auth,
-  form,
+  chats,
+  messages
 })
+
+export const getActivUser = (state) => state.auth.user
+export const getUserId = (user) => user.user._id
+
+export const isCreator =  ( state, chat ) => {
+  try {
+    return getUserId(chat.creator) === getUserId(getActivUser(state))
+  } catch(e) {
+    return false
+  }
+}
+
+export const isMember = ( state, chat ) => {
+  try {
+    return chat.members.some(
+      member => getUserId(member) === getUserId(getActivUser(state))
+    )
+  } catch(e) {
+    return false
+  }
+}
+
+export const isChatMemeber = (state, chat) => {
+  return isCreator(state,chat) || isMember(state, chat)
+}

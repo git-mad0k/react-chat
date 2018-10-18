@@ -9,6 +9,7 @@ import NewChat from './NewChat'
 import SidebarMenu from './SidebarMenu'
 import SidebarSearch from './SidebarSearch'
 
+
 const styles = theme => ({
   drawerPaper: {
     position: 'relative',
@@ -18,7 +19,7 @@ const styles = theme => ({
   },
 })
 
-const Sidebar = ({ classes, chats }) => (
+const Sidebar = ({ classes, chats, handleOpen, joinChat }) => (
   <Drawer
     variant="permanent"
     classes={{
@@ -27,8 +28,8 @@ const Sidebar = ({ classes, chats }) => (
   >
     <SidebarSearch />
     <Divider />
-    <ChatList chats={chats} />
-    <NewChat />
+    <ChatList chats={chats} joinChat={joinChat} />
+    <NewChat handleOpen={handleOpen} />
     <SidebarMenu />
   </Drawer>
 );
