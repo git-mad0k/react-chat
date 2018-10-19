@@ -80,9 +80,10 @@ export function logout() {
       dispatch({
         type: types.LOGOUT_SUCCESS,
         payload: data
-      })      
+      })
+      return data      
     })
-    .cath( error => dispatch({
+    .catch( error => dispatch({
       type: types.LOGOUT_FAILURE,
       payload: error
     }))

@@ -13,12 +13,13 @@ const styles = theme => ({
   },
 })
 
-const SidebarSearch = ({ classes }) => (
+const SidebarSearch = ({ classes, handleSearchChange }) => (
   <div className={classes.toolbar}>
     <TextField
       placeholder="Search charts..."
       className={classes.input}
       margin="normal"
+      onChange={handleSearchChange}
     />
 </div>
 )

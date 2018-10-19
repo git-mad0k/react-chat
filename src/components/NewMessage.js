@@ -14,18 +14,43 @@ const styles = theme => ({
   },
 })
 
-const NewMessage = ({ classes }) => (
-  <div className={classes.new__message}>
-    <Paper>
-      <TextField
-        id="standard-full-width"
-        style={{ padding: 8 }}
-        placeholder="Type your message..."
-        fullWidth
-        margin="normal"
-      />
-    </Paper>
-  </div>
-)
+class NewMessage extends React.Component {
+  state = {
+    value: '',
+  }
+
+  handleValueChange = (event) => {
+    this.setState({
+      value: event.target.value,
+    });
+  }
+
+  handleKeyPress = (event) => {
+    const { value } = this.state;
+
+    if (event.key === 'Enter' && value) {
+      this.props.sendMessage(value);
+      this.setState({ value: '' });
+    }
+  }
+  
+  render() {
+    const { classes } = this.props
+
+    return (
+      <div className={classes.new__message}>
+        <Paper>
+          <TextField
+            id="standard-full-width"
+            style={{ padding: 8 }}
+            placeholder="Type your message..."
+            fullWidth
+            margin="normal"
+          />
+        </Paper>
+      </div>
+    )
+  }
+}
 
 export default withStyles(styles)(NewMessage)

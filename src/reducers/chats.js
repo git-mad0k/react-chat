@@ -43,7 +43,7 @@ const myIds = (state = initialState.myIds, action) => {
     case types.FETCH_MY_CHATS_SUCCESS:
       return action.payload.chats.map(getChatId)
     case types.CREATE_CHAT_SUCCESS:
-    case types.JOIN_CHAT_FAILURE:
+    case types.JOIN_CHAT_SUCCESS:
       return [...state, getChatId(action.payload.chat)]
     case types.LEAVE_CHAT_SUCCESS:
     case types.DELETE_CHAT_SUCCESS:
@@ -54,6 +54,9 @@ const myIds = (state = initialState.myIds, action) => {
       return state;
   }
 }
+
+
+
 const byIds = (state = initialState.byIds, action) => {
   switch (action.type) {
     case types.FETCH_ALL_CHATS_SUCCESS:
