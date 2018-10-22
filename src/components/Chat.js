@@ -16,10 +16,15 @@ const styles = theme => ({
   },
 })
 
-const Chat = ({ classes, messages, sendMessage, joinChat }) => (
+const Chat = ({ classes, messages, sendMessage, joinChat, activeUser, activeChat }) => (
   <main className={classes.content}>
-   <MessageList messages={messages} />
-   <NewMessage onSendMessage={sendMessage} onJoinChat={joinChat} />
+    <MessageList messages={messages} activeUser={activeUser} />
+
+    {activeChat && <NewMessage onSendMessage={(content) => sendMessage(activeChat._id, content)} 
+                onJoinChat={(chatId) => joinChat(activeChat._id)} 
+                activeUser={activeUser}
+                showJoinBtn={!activeUser.isChatMember}
+                />}
   </main>
 )
 

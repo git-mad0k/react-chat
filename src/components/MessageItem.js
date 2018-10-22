@@ -68,10 +68,10 @@ const styles = theme => ({
   },
 });
 
-const MessageItem = ({ classes, message, key }) => {
-  const isMessageForMe = message.sender === "me"
-  const colorForMe = message.sender === "me" ? "red" : "";
-  console.log(message.content)
+const MessageItem = ({ classes, message, key, activeUser }) => {
+  const isMessageForMe = message.sender._id === activeUser._id
+  const colorForMe = message.sender._id === activeUser._id === "me" ? "red" : "";
+  
   if (message.statusMessage) {
     return (
        <div className={classes.userStatusWrapper}>
@@ -83,9 +83,9 @@ const MessageItem = ({ classes, message, key }) => {
     )
   }
   return <div key={key} className={classnames(classes.messageWrapper, isMessageForMe && classes.messageWrapperForMe)}>
-    <AvatarProfile name={message.name} color={colorForMe} />
+    <AvatarProfile name={message.sender.username} color={colorForMe} />
       <Paper className={classnames(classes.messageContainer, isMessageForMe && classes.messageContainerForMe)}>
-        <div className={classes.messageAuthor}>{message.name}</div>
+        <div className={classes.messageAuthor}>{message.sender.username}</div>
         <div className={classes.messageText}>{message.content}</div>
       <div className={classes.messageDate}>{moment(message.date).fromNow()}</div>
       </Paper>

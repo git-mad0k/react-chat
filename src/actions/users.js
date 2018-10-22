@@ -5,7 +5,8 @@ export function editUser(data) {
   return (dispatch, getState) => {
     const { token } = getState().auth
     dispatch({
-      type: types.USER_EDIT_REQUEST      
+      type: types.USER_EDIT_REQUEST,
+      payload: data      
     })
     return callApi('/users/me',token, {method: 'POST'}, {data:{...data}})
     .then(data => dispatch({

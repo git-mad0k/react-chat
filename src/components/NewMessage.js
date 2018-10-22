@@ -2,9 +2,10 @@ import React from 'react'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
-  new__message: {
+  newMessage: {
     position: 'fixed',
     bottom: 0,
     width: `calc(100% - 320px)`,
@@ -27,26 +28,40 @@ class NewMessage extends React.Component {
 
   handleKeyPress = (event) => {
     const { value } = this.state;
-
-    if (event.key === 'Enter' && value) {
-      this.props.sendMessage(value);
-      this.setState({ value: '' });
-    }
-  }
+    const { onSendMessage } = this.props
   
+    if (event.key === 'Enter' && value) {
+      onSendMessage('test')     
+      
+      this.setState({
+        value: ''
+      }) 
+    }     
+  }
+
   render() {
-    const { classes } = this.props
+    const { classes, showJoinBtn, onJoinChat} = this.props
+    const { value } = this.state
 
     return (
-      <div className={classes.new__message}>
+      <div className={classes.newMessage}>
         <Paper>
-          <TextField
+          {!showJoinBtn ? (<TextField
             id="standard-full-width"
             style={{ padding: 8 }}
             placeholder="Type your message..."
             fullWidth
             margin="normal"
-          />
+            value={value}
+            onChange={this.handleValueChange}
+            onKeyPress={this.handleKeyPress}
+          />) : (<Button
+            fullWidth
+            variant="raised"
+            color="primary"
+            onClick={onJoinChat}
+            >  Join
+            </Button>)}
         </Paper>
       </div>
     )

@@ -14,7 +14,7 @@ const configureStore = () => {
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
           serialize: true
-        }) : compose;
+        }) : compose 
     const enhancer = composeEnhancers(applyMiddleware(thunkMiddleware, logger))
     const store = createStore(
       rootReducer,

@@ -56,7 +56,7 @@ class MessageList extends React.Component {
     return messages && messages.length? (
       <div className={classes.messagesWrapper} ref="messagesWrapper">
         {messages && messages.map((message, i) =>
-          <MessageItem message={message} key={i} />
+          <MessageItem message={message} key={i} activeUser={activeUser} />
         )}        
       </div>
     ) : (

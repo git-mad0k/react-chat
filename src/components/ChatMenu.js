@@ -23,7 +23,7 @@ class ChatMenu extends React.Component {
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const { leaveChat, deleteChat } = this.props
+    const { leaveChat, deleteChat, activeUser } = this.props
     return (
       <React.Fragment>
         <IconButton
@@ -47,12 +47,16 @@ class ChatMenu extends React.Component {
             },
           }}
         >         
+          {activeUser.isMember && 
           <MenuItem onClick={leaveChat}>
-              Leave
-            </MenuItem>
+            Leave
+          </MenuItem>} 
+          {activeUser.isCreator && 
           <MenuItem onClick={deleteChat}>
             Delete
           </MenuItem>
+          }
+         
         </Menu>
       </React.Fragment>
     );

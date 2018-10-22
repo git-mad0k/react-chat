@@ -10,7 +10,7 @@ export default combineReducers ({
 })
 
 export const getActivUser = (state) => state.auth.user
-export const getUserId = (user) => user.user._id
+export const getUserId = (user) => user._id
 
 export const isCreator =  ( state, chat ) => {
   try {

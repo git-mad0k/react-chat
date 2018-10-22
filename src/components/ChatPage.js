@@ -60,22 +60,22 @@ class ChatPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { match: { params }, setActiveChat } = this.props;
     const { params: nextParams } = nextProps.match;
-
     // If we change route, then fetch messages from chat by chatID
     if (nextParams.chatId && params.chatId !== nextParams.chatId) {
-      setActiveChat(nextParams.chatId);
+      setActiveChat(nextParams.chatId)
     }
   }
 
   render() {
-    const { classes, chats, joinChat, leaveChat, messages, sendMessage, activeChat } = this.props   
+    const { classes, chats, joinChat, leaveChat, messages, sendMessage, activeUser, deleteChat, editUser } = this.props   
     const { newChatDialog } = this.state
-    console.log(this.props.match)
+   
+
     return (
       <div className={classes.appFrame}>
-        <ChatHeader logOutHandler={this.logOutHandler} leaveChat={leaveChat} />
+        <ChatHeader logOutHandler={this.logOutHandler} leaveChat={leaveChat} deleteChat={deleteChat} activeChat={chats.active} activeUser={activeUser} editUser={editUser} />
         <Sidebar chats={chats} joinChat={joinChat} handleOpen={() => this.handleOpenNewChatDialog() } />
-        <Chat messages={messages} joinChat={joinChat} sendMessage={sendMessage}/>
+        <Chat messages={messages} joinChat={joinChat} sendMessage={sendMessage} activeUser={activeUser} activeChat={chats.active}/>
         <NewChatDialog open={newChatDialog} 
         handleClose={() => this.handleCloseNewChatDialog()}
         submit={this.handleCreateChat} 
