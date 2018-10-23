@@ -3,7 +3,15 @@ import callApi from '../utils/call-api';
 
 export function editUser(data) {
   return (dispatch, getState) => {
-    const { token } = getState().auth
+
+    const state = getState()
+    const { isFetching } = state.services
+
+    if (isFetching.editUser) {
+      return Promise.resolve()
+    }
+
+    const { token } = state.auth
     dispatch({
       type: types.USER_EDIT_REQUEST,
       payload: data      
