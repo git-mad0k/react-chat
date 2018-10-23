@@ -57,7 +57,7 @@ export function fetchChat(chatId) {
           type: types.FETCH_CHAT_FAILURE,
           payload: error.message
         })
-        //dispatch(redirect('/chat'))
+        dispatch(redirect('/chat'))
       })
   }
 }
