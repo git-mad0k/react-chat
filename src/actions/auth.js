@@ -56,13 +56,13 @@ export function login(username, password) {
       }
       localStorage.setItem('token',json.token)
       dispatch({
-        type: types.SINGUP_SUCCESS,
+        type: types.LOGIN_SUCCESS,
         payload: json
       })}
     )
       
     .catch(reason => dispatch({
-      type: types.SINGUP_FAILURE,
+      type: types.LOGIN_FAILURE,
         payload: reason
       }))
   }
