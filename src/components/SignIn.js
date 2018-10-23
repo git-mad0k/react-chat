@@ -44,11 +44,13 @@ class SignIn extends React.Component {
   };
 
   submitForm = e => {
-    e.preventDefault()
-
+    e.preventDefault()    
     const { username, password } = this.state
-    this.props.onSubmit(username.value, password.value )
-
+    this.props.onSubmit(username.value, password.value)
+    .then(data => {
+      return ''
+    })
+    
     this.setState({
       username: {
         value: '',
@@ -57,9 +59,10 @@ class SignIn extends React.Component {
       password: {
         value: '',
         isValid: true
-      },
-     
+      },     
     })
+    console.log(this.props)
+    console.log(this.state)
 
   }
 

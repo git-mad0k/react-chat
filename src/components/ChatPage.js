@@ -4,6 +4,7 @@ import Sidebar from './Sidebar'
 import ChatHeader from './ChatHeader'
 import Chat from './Chat'
 import NewChatDialog from './NewChatDialog'
+import ErrorMessage from './ErrorMessage'
 
 import { withRouter } from 'react-router-dom';
 
@@ -75,7 +76,7 @@ class ChatPage extends React.Component {
   }
 
   render() {
-    const { classes, chats, joinChat, leaveChat, messages, sendMessage, activeUser, deleteChat, editUser } = this.props   
+    const { classes, chats, joinChat, leaveChat, messages, sendMessage, activeUser, deleteChat, editUser, error, errorCloseMessage } = this.props   
     const { newChatDialog } = this.state
    
 
@@ -88,6 +89,7 @@ class ChatPage extends React.Component {
         handleClose={() => this.handleCloseNewChatDialog()}
         submit={this.handleCreateChat} 
         />
+        <ErrorMessage error={error} closeSneckBar={errorCloseMessage}/>
       </div>
     )
   }

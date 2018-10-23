@@ -3,5 +3,5 @@ export * from './chats'
 export * from './services'
 export * from './sockets'
 export * from './users'
-
+export * from './errors'
 

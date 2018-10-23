@@ -8,6 +8,7 @@ import SignUp from './SignUp'
 import Grid from '@material-ui/core/Grid';
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Redirect } from 'react-router-dom'
+import ErrorMessage from './ErrorMessage';
 
 
 const styles = theme => ({
@@ -62,7 +63,7 @@ class WelcomePage extends React.Component {
   }
 
   render() {
-    const { classes, login, signup, isAuthenticated } = this.props;
+    const { classes, error, login, signup, isAuthenticated, errorCloseMessage } = this.props;
     const { tab } = this.state
 
     if (isAuthenticated) {
@@ -93,6 +94,7 @@ class WelcomePage extends React.Component {
             </Paper>
           </Grid>
         </Grid>
+        <ErrorMessage error={error} closeSneckBar={errorCloseMessage} />
       </React.Fragment>
     );
   }

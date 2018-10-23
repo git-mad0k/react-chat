@@ -23,7 +23,7 @@ export function fetchMyChats() {
       }))
       .catch(error => dispatch({
         type: types.FETCH_MY_CHATS_FAILURE,
-        payload: error.message
+        payload: error
       }))
   }
 }
@@ -49,7 +49,7 @@ export function fetchAllChats() {
       }))
       .catch(error => dispatch({
         type:types.FETCH_ALL_CHATS_FAILURE,
-        payload:error.message
+        payload:error
       }))
   }
 }
@@ -79,7 +79,7 @@ export function fetchChat(chatId) {
       .catch(error => {
         dispatch({
           type: types.FETCH_CHAT_FAILURE,
-          payload: error.message
+          payload: error
         })
         dispatch(redirect('/chat'))
       })
@@ -134,7 +134,7 @@ export function createChat(chat) {
       })
       .catch(error => dispatch({
         type: types.CREATE_CHAT_FAILURE,
-        payload: error.message
+        payload: error
       }))
   }
 }
@@ -199,7 +199,7 @@ export function leaveChat(chatId) {
 
       .catch(error => dispatch({
         type: types.LEAVE_CHAT_FAILURE,
-        payload: error.message
+        payload: error
       }))
   }
 }
@@ -232,7 +232,7 @@ export function deleteChat(chatId) {
     })
     .catch( error => dispatch({
       type: types.DELETE_CHAT_FAILURE,
-      payload: error.message
+      payload: error
     }))
   }
 }

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import * as type from '../constants' 
+import * as types from '../constants' 
 
 const initialState = {
   isFetching: {
@@ -16,82 +16,133 @@ const initialState = {
     deleteChat: false,
     sockets: false,
     editUser: false
+  },
+  errors: {
+    auth: null,
+    chat: null,
   }
 }
 
 export const isFetching = (state = initialState.isFetching, action) => {
   switch(action.type) {
-    case type.SINGUP_REQUEST:
+    case types.SINGUP_REQUEST:
       return { ...state, signup: true }
-    case type.LOGIN_REQUEST:
+    case types.LOGIN_REQUEST:
       return { ...state, login: true }
-    case type.LOGOUT_REQUEST:
+    case types.LOGOUT_REQUEST:
       return { ...state, logout: true }
-    case type.RECEIVE_AUTH_REQUEST:
+    case types.RECEIVE_AUTH_REQUEST:
       return { ...state, reciveAuth: true }
-    case type.FETCH_ALL_CHATS_REQUEST:
+    case types.FETCH_ALL_CHATS_REQUEST:
       return { ...state, allChats: true }
-    case type.FETCH_MY_CHATS_REQUEST:
+    case types.FETCH_MY_CHATS_REQUEST:
       return { ...state, myChats: true }
-    case type.FETCH_CHAT_REQUEST:
+    case types.FETCH_CHAT_REQUEST:
       return { ...state, chat: true }
-    case type.CREATE_CHAT_REQUEST:
+    case types.CREATE_CHAT_REQUEST:
       return { ...state, createChat: true }
-    case type.JOIN_CHAT_REQUEST:
+    case types.JOIN_CHAT_REQUEST:
       return { ...state, joinChat: true }
-    case type.LEAVE_CHAT_REQUEST:
+    case types.LEAVE_CHAT_REQUEST:
       return { ...state, leaveChat: true }
-    case type.DELETE_CHAT_REQUEST:
+    case types.DELETE_CHAT_REQUEST:
       return { ...state, deleteChat: true }
-    case type.SOCKET_CONNECTION_REQUEST:
+    case types.SOCKET_CONNECTION_REQUEST:
       return { ...state, sockets: true }
-    case type.USER_EDIT_REQUEST:
+    case types.USER_EDIT_REQUEST:
       return { ...state, editUser: true }
 
-    case type.SINGUP_SUCCESS:
-    case type.SINGUP_FAILURE:
+    case types.SINGUP_SUCCESS:
+    case types.SINGUP_FAILURE:
       return { ...state, signup: false }
-    case type.LOGIN_SUCCESS:
-    case type.LOGIN_FAILURE:
+    case types.LOGIN_SUCCESS:
+    case types.LOGIN_FAILURE:
       return { ...state, login: false }
-    case type.LOGOUT_SUCCESS:
-    case type.LOGOUT_FAILURE:
+    case types.LOGOUT_SUCCESS:
+    case types.LOGOUT_FAILURE:
       return { ...state, logout: false }
-    case type.RECEIVE_AUTH_SUCCESS:
-    case type.RECEIVE_AUTH_FAILURE:
+    case types.RECEIVE_AUTH_SUCCESS:
+    case types.RECEIVE_AUTH_FAILURE:
       return { ...state, reciveAuth: false }
-    case type.FETCH_ALL_CHATS_SUCCESS:
-    case type.FETCH_ALL_CHATS_FAILURE:
+    case types.FETCH_ALL_CHATS_SUCCESS:
+    case types.FETCH_ALL_CHATS_FAILURE:
       return { ...state, allChats: false }
-    case type.FETCH_MY_CHATS_SUCCESS:
-    case type.FETCH_MY_CHATS_FAILURE:
+    case types.FETCH_MY_CHATS_SUCCESS:
+    case types.FETCH_MY_CHATS_FAILURE:
       return { ...state, myChats: false }
-    case type.FETCH_CHAT_SUCCESS:
-    case type.FETCH_CHAT_FAILURE:
+    case types.FETCH_CHAT_SUCCESS:
+    case types.FETCH_CHAT_FAILURE:
       return { ...state, chat: false }
-    case type.CREATE_CHAT_SUCCESS:
-    case type.CREATE_CHAT_FAILURE:
+    case types.CREATE_CHAT_SUCCESS:
+    case types.CREATE_CHAT_FAILURE:
       return { ...state, createChat: false }
-    case type.JOIN_CHAT_SUCCESS:
-    case type.JOIN_CHAT_FAILURE:
+    case types.JOIN_CHAT_SUCCESS:
+    case types.JOIN_CHAT_FAILURE:
       return { ...state, joinChat: false }
-    case type.LEAVE_CHAT_SUCCESS:
-    case type.LEAVE_CHAT_FAILURE:
+    case types.LEAVE_CHAT_SUCCESS:
+    case types.LEAVE_CHAT_FAILURE:
       return { ...state, leaveChat: false }
-    case type.DELETE_CHAT_SUCCESS:
-    case type.DELETE_CHAT_FAILURE:
+    case types.DELETE_CHAT_SUCCESS:
+    case types.DELETE_CHAT_FAILURE:
       return { ...state, deleteChat: false }
-    case type.SOCKET_CONNECTION_SUCCESS:
-    case type.SOCKET_CONNECTION_FAILURE:
+    case types.SOCKET_CONNECTION_SUCCESS:
+    case types.SOCKET_CONNECTION_FAILURE:
       return { ...state, sockets: false }
-    case type.USER_EDIT_SUCCESS:
-    case type.USER_EDIT_FAILURE:
+    case types.USER_EDIT_SUCCESS:
+    case types.USER_EDIT_FAILURE:
       return { ...state, editUser: false }
     default: 
       return state
   }
 }
 
+const errors = (state = initialState.errors, action) => {
+  switch(action.type) {
+
+    // case types.RECEIVE_AUTH_SUCCESS:
+    case types.SINGUP_FAILURE:
+    case types.LOGIN_FAILURE:
+    case types.LOGOUT_FAILURE:
+      return {...state, auth: action.payload }
+
+    // case types.RECEIVE_AUTH_SUCCESS:
+    case types.SINGUP_SUCCESS:
+    case types.LOGIN_SUCCESS:
+    case types.LOGOUT_SUCCESS:    
+      return { ...state, auth: null }
+
+    case types.FETCH_ALL_CHATS_FAILURE:
+    case types.FETCH_MY_CHATS_FAILURE:
+    case types.FETCH_CHAT_FAILURE:
+    case types.CREATE_CHAT_FAILURE:
+    case types.JOIN_CHAT_FAILURE:
+    case types.LEAVE_CHAT_FAILURE:
+    case types.DELETE_CHAT_FAILURE:
+    case types.SOCKET_CONNECTION_FAILURE:
+    case types.USER_EDIT_FAILURE:
+      return { ...state, chat: action.payload }
+      
+    
+    case types.FETCH_ALL_CHATS_SUCCESS:
+    case types.FETCH_MY_CHATS_SUCCESS:
+    case types.FETCH_CHAT_SUCCESS:
+    case types.CREATE_CHAT_SUCCESS:
+    case types.JOIN_CHAT_SUCCESS:
+    case types.LEAVE_CHAT_SUCCESS:
+    case types.DELETE_CHAT_SUCCESS:
+    case types.SOCKET_CONNECTION_SUCCESS:
+    case types.USER_EDIT_SUCCESS:    
+      return { ...state, chat: null }
+
+    case types.ERROR_MESSAGE_CLOSE:
+      return { chat: null, auth: null }
+
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
-  isFetching
+  isFetching,
+  errors
 })
