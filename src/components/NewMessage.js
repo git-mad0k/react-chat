@@ -31,7 +31,7 @@ class NewMessage extends React.Component {
     const { onSendMessage } = this.props
   
     if (event.key === 'Enter' && value) {
-      onSendMessage('test')     
+      onSendMessage(value)     
       
       this.setState({
         value: ''

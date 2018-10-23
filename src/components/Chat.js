@@ -20,7 +20,8 @@ const Chat = ({ classes, messages, sendMessage, joinChat, activeUser, activeChat
   <main className={classes.content}>
     <MessageList messages={messages} activeUser={activeUser} />
 
-    {activeChat && <NewMessage onSendMessage={(content) => sendMessage(activeChat._id, content)} 
+    {activeChat && <NewMessage 
+                onSendMessage={sendMessage} 
                 onJoinChat={(chatId) => joinChat(activeChat._id)} 
                 activeUser={activeUser}
                 showJoinBtn={!activeUser.isChatMember}

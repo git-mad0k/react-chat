@@ -7,6 +7,7 @@ import NewChatDialog from './NewChatDialog'
 
 import { withRouter } from 'react-router-dom';
 
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -44,25 +45,32 @@ class ChatPage extends React.Component {
     this.props.createChat(chat)
   }
   componentDidMount() {
-    const { match,fetchMyChats, fetchAllChats, setActiveChat } = this.props
+    const { match, fetchMyChats, fetchAllChats, setActiveChat, socketsConnect, mountChat  } = this.props
 
     Promise.all([
       fetchMyChats(),
       fetchAllChats(),
     ])
     .then(() => {
-      if (match.params.chatId) {
-        setActiveChat(match.params.chatId);
+      socketsConnect()
+    })
+    .then(() => {
+      const { chatId } = match.params
+      if (chatId) {
+        setActiveChat(chatId);
+        mountChat(chatId)
       }
     })
   }
 
   componentWillReceiveProps(nextProps) {
-    const { match: { params }, setActiveChat } = this.props;
+    const { match: { params }, setActiveChat, unmountChat, mountChat} = this.props;
     const { params: nextParams } = nextProps.match;
     // If we change route, then fetch messages from chat by chatID
     if (nextParams.chatId && params.chatId !== nextParams.chatId) {
       setActiveChat(nextParams.chatId)
+      unmountChat(params.chatId)
+      mountChat(nextParams.chatId)
     }
   }
 

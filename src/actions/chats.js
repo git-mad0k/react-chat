@@ -179,25 +179,3 @@ export function deleteChat(chatId) {
     }))
   }
 }
-
-export function sendMessage(chatId, content) {
-  return (dispatch, getState) => {
-    const { token } = getState().auth
-    dispatch({
-      type: types.MESSAGE_SEND_REQUEST,
-      payload: { chatId, content}
-    })
-    return callApi(`/chats/${chatId}`, token, { method: 'POST' }, { 'data': { content } })
-      .then(data => {
-        dispatch({
-        type: types.MESSAGE_SEND_SUCCESS,
-        payload: data
-        })
-        dispatch(fetchChat(chatId))
-      })
-      .catch(error => dispatch({
-        type: types.MESSAGE_SEND_FAILURE,
-        payload: error.message
-      }))
-  }
-}
