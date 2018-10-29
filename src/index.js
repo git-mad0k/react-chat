@@ -15,7 +15,7 @@ const store = configureStore()
 const render = (Component) => {
   ReactDOM.render(
     <Provider store={store}>
-      <Commponent />
+      <Component />
     </Provider>,
     rootEl);
 }
