@@ -12,16 +12,19 @@ import configureStore from './store'
 const rootEl = document.getElementById('root')
 const store = configureStore()
 
-ReactDOM.render(
-  <Provider store={store}>
-  <App />
-  </Provider>, rootEl);
+const render = (Component) => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <Commponent />
+    </Provider>,
+    rootEl);
+}
+
+render(App)
 
 if (module.hot) {
   module.hot.accept('./components/App', () => {
-    ReactDOM.render(<Provider store={store}>
-      <App />
-    </Provider>, rootEl)
+    render(App)
   })
 }
 
