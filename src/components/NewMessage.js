@@ -2,9 +2,10 @@ import React from 'react'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
-  new__message: {
+  newMessage: {
     position: 'fixed',
     bottom: 0,
     width: `calc(100% - 320px)`,
@@ -14,18 +15,57 @@ const styles = theme => ({
   },
 })
 
-const NewMessage = ({ classes }) => (
-  <div className={classes.new__message}>
-    <Paper>
-      <TextField
-        id="standard-full-width"
-        style={{ padding: 8 }}
-        placeholder="Type your message..."
-        fullWidth
-        margin="normal"
-      />
-    </Paper>
-  </div>
-)
+class NewMessage extends React.Component {
+  state = {
+    value: '',
+  }
+
+  handleValueChange = (event) => {
+    this.setState({
+      value: event.target.value,
+    });
+  }
+
+  handleKeyPress = (event) => {
+    const { value } = this.state;
+    const { onSendMessage } = this.props
+  
+    if (event.key === 'Enter' && value) {
+      onSendMessage(value)     
+      
+      this.setState({
+        value: ''
+      }) 
+    }     
+  }
+
+  render() {
+    const { classes, showJoinBtn, onJoinChat} = this.props
+    const { value } = this.state
+
+    return (
+      <div className={classes.newMessage}>
+        <Paper>
+          {!showJoinBtn ? (<TextField
+            id="standard-full-width"
+            style={{ padding: 8 }}
+            placeholder="Type your message..."
+            fullWidth
+            margin="normal"
+            value={value}
+            onChange={this.handleValueChange}
+            onKeyPress={this.handleKeyPress}
+          />) : (<Button
+            fullWidth
+            variant="raised"
+            color="primary"
+            onClick={onJoinChat}
+            >  Join
+            </Button>)}
+        </Paper>
+      </div>
+    )
+  }
+}
 
 export default withStyles(styles)(NewMessage)

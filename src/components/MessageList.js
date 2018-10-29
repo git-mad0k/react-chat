@@ -1,6 +1,10 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { withRouter } from 'react-router-dom';
 import MessageItem from './MessageItem'
+
+import  Typography from '@material-ui/core/Typography';
+import  Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   messagesWrapper: {
@@ -10,27 +14,9 @@ const styles = theme => ({
     width: "100%",
     height: "100%"
   },
-  userStatusWrapper: {
-    alignSelf: "center",
-    display: "flex",
-    margin: "1rem 0.8rem",
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontSize: "0.875rem",
-    fontWeight: "400",
-    textAlign: "center",
-    flexDirection: "column"
-  },
-  userName: {
-    fontSize: "1em",
-    color: "green"
-  },
-  userStatus: {
-    fontSize: "1em",
-    color: "#000"
-  },
-  userDateVisit: {
-    fontSize: "0.875em",
-    color: "rgb(96, 125, 139)"
+ 
+  paper: {
+    padding: theme.spacing.unit * 3
   }
 });
 
@@ -50,20 +36,34 @@ class MessageList extends React.Component {
     }
   }
   render() {
-    const { classes, messages } = this.props
-    return (
+    const { classes, messages, match, activeUser  } = this.props    
+    if (!match.params.chatId) {
+      return (
+        <Paper className={classes.paper}>
+          <Typography variant="display1" gutterBottom>
+            Start messaging…
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Use <strong>Global</strong> to explore communities around here.
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Use <strong>Recents</strong> to see your recent conversations.
+          </Typography>
+        </Paper>
+      );
+    }
+
+    return messages && messages.length? (
       <div className={classes.messagesWrapper} ref="messagesWrapper">
         {messages && messages.map((message, i) =>
-          <MessageItem message={message} key={i} />
-        )}
-        <div className={classes.userStatusWrapper}>
-          <div className={classes.userName}>
-            testuser <span className={classes.userStatus}>joined</span>
-          </div>
-          <div className={classes.userDateVisit}> 2 days ago </div>
-        </div>
+          <MessageItem message={message} key={i} activeUser={activeUser} />
+        )}        
       </div>
+    ) : (
+      <Typography variant="display1">
+          There is no messages yet...
+      </Typography>
     )
   }
 }
-export default withStyles(styles)(MessageList)
+export default withRouter(withStyles(styles)(MessageList))

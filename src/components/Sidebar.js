@@ -9,6 +9,7 @@ import NewChat from './NewChat'
 import SidebarMenu from './SidebarMenu'
 import SidebarSearch from './SidebarSearch'
 
+
 const styles = theme => ({
   drawerPaper: {
     position: 'relative',
@@ -18,19 +19,49 @@ const styles = theme => ({
   },
 })
 
-const Sidebar = ({ classes, chats }) => (
-  <Drawer
-    variant="permanent"
-    classes={{
-      paper: classes.drawerPaper
-    }}
-  >
-    <SidebarSearch />
-    <Divider />
-    <ChatList chats={chats} />
-    <NewChat />
-    <SidebarMenu />
-  </Drawer>
-);
+class Sidebar extends React.Component {
+  state = {
+    activeTab: 0,
+    searchValue: ''
+  }
 
+  handleTabChange = (event, value) => {
+    this.setState({
+      activeTab: value,
+    })
+  }
+
+  handleSearchChange = (event) => {
+    this.setState({
+      searchValue: event.currentTarget.value
+    })
+  }
+
+  filterChat = (chats) => {
+    const { searchValue } = this.state
+    return chats.filter(chat => chat.title
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
+                  )
+  }
+
+  render() {
+    const { classes, chats, handleOpen, joinChat } = this.props
+    const {activeTab} = this.state
+    return (
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <SidebarSearch handleSearchChange={this.handleSearchChange}/>
+        <Divider />
+        <ChatList chats={this.filterChat(activeTab === 0 ? chats.my : chats.all) } joinChat={joinChat} />
+        <NewChat handleOpen={handleOpen} />
+        <SidebarMenu activeTab={activeTab} handleTabChange={this.handleTabChange} />
+      </Drawer>
+    );
+  }
+}
 export default withStyles(styles)(Sidebar)

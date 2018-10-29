@@ -5,5 +5,24 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import 'typeface-roboto';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { Provider } from 'react-redux'
+import configureStore from './store'
+
+
+const rootEl = document.getElementById('root')
+const store = configureStore()
+
+ReactDOM.render(
+  <Provider store={store}>
+  <App />
+  </Provider>, rootEl);
+
+if (module.hot) {
+  module.hot.accept('./components/App', () => {
+    ReactDOM.render(<Provider store={store}>
+      <App />
+    </Provider>, rootEl)
+  })
+}
+
 registerServiceWorker();

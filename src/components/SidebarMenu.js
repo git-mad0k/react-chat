@@ -14,8 +14,8 @@ const styles = theme => ({
   },
 })
 
-const SidebarMenu = ({ classes }) => (
-  <BottomNavigation showLabels className={classes.bottom}>
+const SidebarMenu = ({ classes, activeTab, handleTabChange }) => (
+  <BottomNavigation showLabels className={classes.bottom} value={activeTab} onChange={handleTabChange}>
     <BottomNavigationAction label="My Charts" icon={<RestoreIcon />} />
     <BottomNavigationAction label="Explore" icon={<ExploreIcon />} />
   </BottomNavigation>

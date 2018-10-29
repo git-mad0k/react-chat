@@ -1,26 +1,15 @@
-import {
-  SINGUP_REQUEST, SINGUP_SUCCESS, SINGUP_FAILURE,
-  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
-  LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE,
-} from '../constants'
+import * as types from '../constants/auth'
+import callApi from '../utils/call-api';
 
 export function signup(username, password) {
   return (dispatch) => {
     dispatch({
-      type: SINGUP_REQUEST,
+      type: types.SINGUP_REQUEST,
     })
-    return fetch('http://localhost:8000/v1/signup', {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    return callApi('/signup', undefined, { method: "POST" }, {
         username,
-        password,
-      }),
-    })
-    .then((res) => res.json())
+        password
+      })
       .then(json => {
         if (json.success) {
           return json
@@ -33,13 +22,13 @@ export function signup(username, password) {
         }
         localStorage.setItem('token', json.token) 
         dispatch({
-          type: SINGUP_SUCCESS,
+          type: types.SINGUP_SUCCESS,
           payload: json
         })
       }
       )
       .catch(reason => dispatch({
-        type: SINGUP_FAILURE,
+        type: types.SINGUP_FAILURE,
         payload: reason
       }))
   }
@@ -49,20 +38,12 @@ export function signup(username, password) {
 export function login(username, password) {
   return (dispatch) => {
     dispatch({
-      type: LOGIN_REQUEST,
+      type: types.LOGIN_REQUEST,
     })
-    return fetch('http://localhost:8000/v1/login', {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    return callApi('/login', undefined, { method: "POST"}, {
         username,
         password,
-      }),
-    })
-    .then((res) => res.json())
+      }) 
     .then(json => {
       if (json.success) {
         return json
@@ -75,13 +56,13 @@ export function login(username, password) {
       }
       localStorage.setItem('token',json.token)
       dispatch({
-        type: SINGUP_SUCCESS,
+        type: types.LOGIN_SUCCESS,
         payload: json
       })}
     )
       
     .catch(reason => dispatch({
-        type: SINGUP_FAILURE,
+      type: types.LOGIN_FAILURE,
         payload: reason
       }))
   }
@@ -90,9 +71,48 @@ export function login(username, password) {
 
 export function logout() {
   return (dispatch) => {
-    localStorage.removeItem('token')
     dispatch({
-      type: LOGOUT_SUCCESS
+      type: types.LOGOUT_REQUEST
     })
+    return callApi('/logout')
+    .then(data => {
+      localStorage.removeItem('token')
+      dispatch({
+        type: types.LOGOUT_SUCCESS,
+        payload: data
+      })
+      return data      
+    })
+    .catch( error => dispatch({
+      type: types.LOGOUT_FAILURE,
+      payload: error
+    }))
+  }
+}
+
+export function receiveAuth() {
+  return (dispatch, getState) => {
+    const { token } = getState().auth
+
+    if (!token) {
+      dispatch({
+        type: types.RECEIVE_AUTH_FAILURE,
+      })
+    }
+
+    return callApi('/users/me', token)     
+    .then(json => {
+      dispatch({
+        type: types.RECEIVE_AUTH_SUCCESS,
+        payload: json
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: types.RECEIVE_AUTH_FAILURE,
+        payload: error
+      })
+    })
+    
   }
 }

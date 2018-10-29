@@ -1,10 +1,11 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { chats, messages } from "../mock-data.json"
 import Sidebar from './Sidebar'
 import ChatHeader from './ChatHeader'
 import Chat from './Chat'
-import { Redirect } from 'react-router-dom';
+import NewChatDialog from './NewChatDialog'
+
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -22,23 +23,66 @@ const styles = theme => ({
 
 class ChatPage extends React.Component {
 
+  state = {
+    newChatDialog: false
+  }
+
   logOutHandler = e => {
     e.persist()
     this.props.logout()    
   }
-  render() {
-    const { classes, isAuthenticated } = this.props
-    if (!isAuthenticated) {
-      return (<Redirect to="/" />)
+
+  handleOpenNewChatDialog = () => {
+    this.setState({ newChatDialog: true });
+  }
+
+  handleCloseNewChatDialog = () => {
+    this.setState({ newChatDialog: false });
+  }
+
+  handleCreateChat = chat => {
+    this.props.createChat(chat)
+  }
+  componentDidMount() {
+    const { match,fetchMyChats, fetchAllChats, setActiveChat } = this.props
+
+    Promise.all([
+      fetchMyChats(),
+      fetchAllChats(),
+    ])
+    .then(() => {
+      if (match.params.chatId) {
+        setActiveChat(match.params.chatId);
+      }
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { match: { params }, setActiveChat } = this.props;
+    const { params: nextParams } = nextProps.match;
+    // If we change route, then fetch messages from chat by chatID
+    if (nextParams.chatId && params.chatId !== nextParams.chatId) {
+      setActiveChat(nextParams.chatId)
     }
+  }
+
+  render() {
+    const { classes, chats, joinChat, leaveChat, messages, sendMessage, activeUser, deleteChat, editUser } = this.props   
+    const { newChatDialog } = this.state
+   
+
     return (
       <div className={classes.appFrame}>
-        <ChatHeader onClick={this.logOutHandler} />
-        <Sidebar chats={chats} />
-        <Chat messages={messages} />
+        <ChatHeader logOutHandler={this.logOutHandler} leaveChat={leaveChat} deleteChat={deleteChat} activeChat={chats.active} activeUser={activeUser} editUser={editUser} />
+        <Sidebar chats={chats} joinChat={joinChat} handleOpen={() => this.handleOpenNewChatDialog() } />
+        <Chat messages={messages} joinChat={joinChat} sendMessage={sendMessage} activeUser={activeUser} activeChat={chats.active}/>
+        <NewChatDialog open={newChatDialog} 
+        handleClose={() => this.handleCloseNewChatDialog()}
+        submit={this.handleCreateChat} 
+        />
       </div>
     )
   }
 }
 
-export default withStyles(styles)(ChatPage)
+export default withRouter(withStyles(styles)(ChatPage))

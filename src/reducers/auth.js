@@ -1,9 +1,5 @@
-import { 
-  SINGUP_REQUEST, SINGUP_SUCCESS, SINGUP_FAILURE,
-  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
-  LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE,
- } from '../constants'
-import {Record} from 'immutable'
+import * as types from '../constants'
+import { Record } from 'immutable'
 
 const token = localStorage.getItem('token')
 
@@ -15,15 +11,20 @@ const schemeRecord = Record({
 
 const auth = (state = new schemeRecord(), action) => { 
   switch (action.type) {
-    case SINGUP_SUCCESS:
-    case LOGIN_SUCCESS:
+    case types.SINGUP_SUCCESS:
+    case types.LOGIN_SUCCESS:
       return state
           .set('isAuthenticated', true)
           .set('user', action.payload.user)
-          .set('token', action.payload.token)      
-    case SINGUP_FAILURE:
-    case LOGIN_FAILURE:
-    case LOGOUT_SUCCESS:
+          .set('token', action.payload.token)
+    case types.RECEIVE_AUTH_SUCCESS: 
+      return state
+        .set('isAuthenticated', true)
+        .set('user', action.payload.user)        
+    case types.SINGUP_FAILURE:
+    case types.LOGIN_FAILURE:
+    case types.RECEIVE_AUTH_FAILURE:
+    case types.LOGOUT_SUCCESS:
       return state
         .set('isAuthenticated', false)
         .set('user', null)
