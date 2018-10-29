@@ -7,7 +7,8 @@ import { redirect } from './services'
 
 export function missingSocketConnection() {
   return {
-    type: types.SOCKET_CONNECTION_MISSING
+    type: types.SOCKET_CONNECTION_MISSING,
+    payload: new Error('Missing connection')
   }
 }
 
@@ -38,14 +39,16 @@ export function socketsConnect() {
         type: types.SOCKET_CONNECTION_SUCCESS
       })
     })
-    socket.on('error', () => {
+    socket.on('error', (error) => {
       dispatch({
-        type: types.SOCKET_CONNECTION_FAILURE
+        type: types.SOCKET_CONNECTION_FAILURE,
+        payload: new Error(`Connection ${error}`),
       })
     })
     socket.on('connect_error', () => {
       dispatch({
-        type: types.SOCKET_CONNECTION_FAILURE
+        type: types.SOCKET_CONNECTION_FAILURE,
+        payload: new Error('We have lost a connection :( ')
       })
     })
 
@@ -57,13 +60,15 @@ export function socketsConnect() {
     })
     socket.on('new-chat', ({ chat }) => {
       dispatch({
-        type: types.RECIEVE_NEW_CHAT
+        type: types.RECIEVE_NEW_CHAT,
+        payload: { chat }
       })
     })
     socket.on('deleted_chat', ({ chat }) => {
       const { activeId } = getState().chats
       dispatch({
-        type: types.RECIEVE_DELETED_CHAT
+        type: types.RECIEVE_DELETED_CHAT,
+        payload: { chat },
       })
 
       if (chat._id === activeId._id) {
@@ -82,8 +87,6 @@ export function sendMessage(content) {
       dispatch(missingSocketConnection())
     }
 
-   
-
     socket.emit('send-message',{
       chatId: activeId,
       content
@@ -100,32 +103,35 @@ export function sendMessage(content) {
 }
 
 export function mountChat(chatId) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
 
     if (!socket) {
       dispatch(missingSocketConnection())
     }
+    
+    socket.emit('mount-chat', chatId)
+
 
     dispatch({
       type: types.MOUNT_CHAT,
       payload: { chatId }
     })
 
-    socket.emit('mount-chat', chatId)
   }
 }
 export function unmountChat(chatId) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
 
     if (!socket) {
       dispatch(missingSocketConnection())
     }
+
+    socket.emit('unmount-chat', chatId)
 
     dispatch({
       type: types.UNMOUNT_CHAT,
       payload: { chatId }
     })
 
-    socket.emit('unmount-chat', chatId)
   }
 }

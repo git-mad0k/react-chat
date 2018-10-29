@@ -26,11 +26,14 @@ const styles = theme => ({
 class ChatPage extends React.Component {
 
   state = {
-    newChatDialog: false
+    newChatDialog: false,
+    params: '',    
+    setActiveChat: this.props.setActiveChat,
+    unmountChat: this.props.unmountChat,
+    mountChat: this.props.mountChat      
   }
 
-  logOutHandler = e => {
-    e.persist()
+  logOutHandler = () => {    
     this.props.logout()    
   }
 
@@ -42,8 +45,12 @@ class ChatPage extends React.Component {
     this.setState({ newChatDialog: false });
   }
 
-  handleCreateChat = chat => {
+  handleCreateChat = value => {
+    const { chat } = value   
     this.props.createChat(chat)
+    this.setState({
+      newChatDialog: false
+    })
   }
   componentDidMount() {
     const { match, fetchMyChats, fetchAllChats, setActiveChat, socketsConnect, mountChat  } = this.props
@@ -61,33 +68,65 @@ class ChatPage extends React.Component {
         setActiveChat(chatId);
         mountChat(chatId)
       }
+      this.setState({
+        params: chatId
+      })
     })
+
+    
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { match: { params }, setActiveChat, unmountChat, mountChat} = this.props;
-    const { params: nextParams } = nextProps.match;
-    // If we change route, then fetch messages from chat by chatID
-    if (nextParams.chatId && params.chatId !== nextParams.chatId) {
-      setActiveChat(nextParams.chatId)
-      unmountChat(params.chatId)
-      mountChat(nextParams.chatId)
+  static getDerivedStateFromProps(props, state) {
+    const { params: nextParams } = props.match
+
+    if (nextParams.chatId && state.params !== nextParams.chatId) {
+      const newId = nextParams.chatId
+      const oldId = state.params
+      state.setActiveChat(newId)
+      state.unmountChat(oldId)
+      state.mountChat(newId)
+      return {
+        params: nextParams.chatId
+      }
     }
+    return null
   }
 
   render() {
-    const { classes, chats, joinChat, leaveChat, messages, sendMessage, activeUser, deleteChat, editUser, error, errorCloseMessage } = this.props   
+    const { classes, chats, joinChat, leaveChat, messages, 
+      sendMessage, activeUser, deleteChat, editUser, error, errorCloseMessage, isConnected } = this.props   
     const { newChatDialog } = this.state
-   
 
     return (
       <div className={classes.appFrame}>
-        <ChatHeader logOutHandler={this.logOutHandler} leaveChat={leaveChat} deleteChat={deleteChat} activeChat={chats.active} activeUser={activeUser} editUser={editUser} />
-        <Sidebar chats={chats} joinChat={joinChat} handleOpen={() => this.handleOpenNewChatDialog() } />
-        <Chat messages={messages} joinChat={joinChat} sendMessage={sendMessage} activeUser={activeUser} activeChat={chats.active}/>
-        <NewChatDialog open={newChatDialog} 
-        handleClose={() => this.handleCloseNewChatDialog()}
-        submit={this.handleCreateChat} 
+        <ChatHeader 
+          logOutHandler={this.logOutHandler} 
+          leaveChat={leaveChat} 
+          deleteChat={deleteChat} 
+          activeChat={chats.active} 
+          activeUser={activeUser} 
+          editUser={editUser}
+          isConnected={isConnected}
+          />
+        <Sidebar 
+          chats={chats} 
+          joinChat={joinChat}
+          handleOpen={() => this.handleOpenNewChatDialog() }
+          isConnected={isConnected}
+          activeChat={chats.active}      
+          />
+        <Chat 
+          messages={messages} 
+          joinChat={joinChat} 
+          sendMessage={sendMessage} 
+          activeUser={activeUser} 
+          activeChat={chats.active}
+          isConnected={isConnected}
+          />
+        <NewChatDialog 
+          open={newChatDialog} 
+          handleClose={() => this.handleCloseNewChatDialog()}
+          submit={(value) => this.handleCreateChat(value)} 
         />
         <ErrorMessage error={error} closeSneckBar={errorCloseMessage}/>
       </div>

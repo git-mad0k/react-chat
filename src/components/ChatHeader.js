@@ -24,7 +24,7 @@ const styles = theme => ({
   },
 });
 
-const ChatHeader = ({ classes, logOutHandler, leaveChat, activeChat, deleteChat, editUser, activeUser }) => {
+const ChatHeader = ({ classes, logOutHandler, leaveChat, activeChat, deleteChat, editUser, activeUser, isConnected }) => {
   return (
   <AppBar position="absolute" className={classes.appBar}>
     <Toolbar>      
@@ -33,9 +33,14 @@ const ChatHeader = ({ classes, logOutHandler, leaveChat, activeChat, deleteChat,
             <AvatarProfile name={activeChat.title} />
             <Typography variant="title" className={classes.chatName} noWrap>
               {activeChat.title}
-              {activeUser.isChatMember && <ChatMenu leaveChat={() => leaveChat(activeChat._id)} 
-                        deleteChat={() => deleteChat(activeChat._id)} 
-                        activeUser={activeUser} />}
+              {activeUser.isChatMember && 
+                <ChatMenu 
+                  leaveChat={() => leaveChat(activeChat._id)} 
+                  deleteChat={() => deleteChat(activeChat._id)} 
+                  activeUser={activeUser} 
+                  disabled={!isConnected}
+                />
+              }
             </Typography>
           </React.Fragment>) : (
             <React.Fragment>
@@ -44,9 +49,14 @@ const ChatHeader = ({ classes, logOutHandler, leaveChat, activeChat, deleteChat,
                 React Chat                
               </Typography>
             </React.Fragment>)} 
-        <ProfileMenu logOutHandler={logOutHandler} editUser={editUser} activeUser={activeUser} />         
+        <ProfileMenu 
+          logOutHandler={logOutHandler} 
+          editUser={editUser} 
+          activeUser={activeUser} 
+          disabled={!isConnected}
+          />         
     </Toolbar>
   </AppBar>
 )};
- 
+
 export default withStyles(styles)(ChatHeader);

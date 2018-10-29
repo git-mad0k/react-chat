@@ -60,10 +60,7 @@ class SignIn extends React.Component {
         value: '',
         isValid: true
       },     
-    })
-    console.log(this.props)
-    console.log(this.state)
-
+    })     
   }
 
   validate = () => {
