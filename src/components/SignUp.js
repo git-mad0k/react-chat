@@ -22,13 +22,7 @@ const styles = theme => ({
   }
 });
 
-const SignUp = ({ classes, onSubmit, handleSubmit }) => {
-
-  const submitForm = values => {
-    const { username, password } = values
-    onSubmit(username, password)
-  }
-
+const SignUp = ({ classes, onSubmit }) => { 
   return (
     <React.Fragment>
       <Avatar className={classes.avatar}>
@@ -36,7 +30,7 @@ const SignUp = ({ classes, onSubmit, handleSubmit }) => {
       </Avatar>
       <Typography variant="display1">Sign up</Typography>
       <Form 
-        onSubmit={submitForm}
+        onSubmit={onSubmit}
         initialValues={{ employed: true, stooge: 'larry' }}
         validate={validate}
         render={({ handleSubmit, reset, submitting, pristine, values }) => (

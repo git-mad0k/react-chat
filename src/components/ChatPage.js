@@ -27,10 +27,7 @@ class ChatPage extends React.Component {
 
   state = {
     newChatDialog: false,
-    params: '',    
-    setActiveChat: this.props.setActiveChat,
-    unmountChat: this.props.unmountChat,
-    mountChat: this.props.mountChat      
+    params: '',
   }
 
   logOutHandler = () => {    
@@ -67,10 +64,11 @@ class ChatPage extends React.Component {
       if (chatId) {
         setActiveChat(chatId);
         mountChat(chatId)
+        this.setState({
+          params: chatId
+        })
       }
-      this.setState({
-        params: chatId
-      })
+      
     })
 
     
@@ -80,11 +78,6 @@ class ChatPage extends React.Component {
     const { params: nextParams } = props.match
 
     if (nextParams.chatId && state.params !== nextParams.chatId) {
-      const newId = nextParams.chatId
-      const oldId = state.params
-      state.setActiveChat(newId)
-      state.unmountChat(oldId)
-      state.mountChat(newId)
       return {
         params: nextParams.chatId
       }
@@ -92,6 +85,14 @@ class ChatPage extends React.Component {
     return null
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    const { setActiveChat, unmountChat, mountChat } = this.props
+    if (prevState.params !== this.state.params) {
+      setActiveChat(this.state.params)
+      unmountChat(prevState.params)
+      mountChat(this.state.params)
+    }
+  }
   render() {
     const { classes, chats, joinChat, leaveChat, messages, 
       sendMessage, activeUser, deleteChat, editUser, error, errorCloseMessage, isConnected } = this.props   
