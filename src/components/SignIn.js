@@ -1,66 +1,65 @@
-import React from 'react'
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import LockIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
+import LockIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
-   avatar: {
+  avatar: {
     margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE11 issue.
-    marginTop: theme.spacing.unit
+    width: '100%', // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
   },
   submit: {
     marginTop: theme.spacing.unit * 3,
-  }
+  },
 });
 
 class SignIn extends React.Component {
   state = {
     username: {
       value: '',
-      isValid: true
+      isValid: true,
     },
     password: {
       value: '',
-      isValid: true
-    }    
+      isValid: true,
+    },
   };
 
-  handlerFormInput = e => {
-    e.persist()
+  handlerFormInput = (e) => {
+    e.persist();
     const { name, value } = e.currentTarget;
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       [name]: {
         ...prevState[name],
-        value
-      }
-    }))
+        value,
+      },
+    }));
   };
 
-  submitForm = e => {
-    e.preventDefault()    
-    const { username, password } = this.state
-    this.props.onSubmit(username.value, password.value)
-    .then(data => {
-      return ''
-    })
-    
+  submitForm = (e) => {
+    e.preventDefault();
+    const { username, password } = this.state;
+    const { onSubmit } = this.props;
+    onSubmit(username.value, password.value)
+      .then(Promise.resolve());
+
     this.setState({
       username: {
         value: '',
-        isValid: true
+        isValid: true,
       },
       password: {
         value: '',
-        isValid: true
-      },     
-    })     
+        isValid: true,
+      },
+    });
   }
 
   validate = () => {
@@ -70,9 +69,10 @@ class SignIn extends React.Component {
     }
     return false;
   };
+
   render() {
     const { classes } = this.props;
-    const { username, password } = this.state
+    const { username, password } = this.state;
     return (
       <React.Fragment>
         <Avatar className={classes.avatar}>
@@ -82,7 +82,7 @@ class SignIn extends React.Component {
         <form className={classes.form}>
           <TextField
             name="username"
-            placeholder={'Enter your Login'}
+            placeholder="Enter your Login"
             type="text"
             onChange={this.handlerFormInput}
             value={username.value}
@@ -90,11 +90,11 @@ class SignIn extends React.Component {
             autoComplete="username"
             required
             fullWidth
-            label={'Login'}
+            label="Login"
           />
           <TextField
             name="password"
-            placeholder={'Enter your password'}
+            placeholder="Enter your password"
             type="password"
             onChange={this.handlerFormInput}
             value={password.value}
@@ -102,9 +102,9 @@ class SignIn extends React.Component {
             autoComplete="current-password"
             required
             fullWidth
-            label={'Password'}
+            label="Password"
           />
-          
+
           <Button
             type="submit"
             fullWidth
@@ -115,7 +115,7 @@ class SignIn extends React.Component {
             onClick={this.submitForm}
           >
             Sign in
-              </Button>
+          </Button>
         </form>
       </React.Fragment>
     );

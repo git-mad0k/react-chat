@@ -1,147 +1,141 @@
-import * as types from '../constants'
+import * as types from '../constants';
 import callApi from '../utils/call-api';
 
 
 export function signup(username, password) {
-  return (dispatch,getState) => {
-
-    const { isFetching } = getState().services
+  return (dispatch, getState) => {
+    const { isFetching } = getState().services;
 
     if (isFetching.signup) {
-      return Promise.resolve()
+      return Promise.resolve();
     }
 
     dispatch({
       type: types.SINGUP_REQUEST,
+    });
+    return callApi('/signup', undefined, { method: 'POST' }, {
+      username,
+      password,
     })
-    return callApi('/signup', undefined, { method: "POST" }, {
-        username,
-        password
-      })
-      .then(json => {
+      .then((json) => {
         if (json.success) {
-          return json
+          return json;
         }
-        throw new Error(json.message)
+        throw new Error(json.message);
       })
-      .then(json => {
+      .then((json) => {
         if (!json.token) {
-         throw new Error('Token has not benn provided!')   
+          throw new Error('Token has not benn provided!');
         }
-        localStorage.setItem('token', json.token) 
+        localStorage.setItem('token', json.token);
         dispatch({
           type: types.SINGUP_SUCCESS,
-          payload: json
-        })
-      }
-      )
+          payload: json,
+        });
+      })
       .catch(reason => dispatch({
         type: types.SINGUP_FAILURE,
-        payload: reason
-      }))
-  }
+        payload: reason,
+      }));
+  };
 }
 
 
 export function login(username, password) {
-  return (dispatch,getState) => {
-
-    const { isFetching } = getState().services
+  return (dispatch, getState) => {
+    const { isFetching } = getState().services;
 
     if (isFetching.login) {
-      return Promise.resolve()
+      return Promise.resolve();
     }
 
     dispatch({
       type: types.LOGIN_REQUEST,
+    });
+    return callApi('/login', undefined, { method: 'POST' }, {
+      username,
+      password,
     })
-    return callApi('/login', undefined, { method: "POST"}, {
-        username,
-        password,
-      }) 
-    .then(json => {
-      if (json.success) {
-        return json
-      }
-      throw new Error (json.message)
+      .then((json) => {
+        if (json.success) {
+          return json;
+        }
+        throw new Error(json.message);
       })
-    .then(json => {
-      if (!json.token) {
-        throw new Error('Token has not benn provided!')
-      }
-      localStorage.setItem('token',json.token)
-      dispatch({
-        type: types.LOGIN_SUCCESS,
-        payload: json
-      })}
-    )
-      
-    .catch(reason => dispatch({
-      type: types.LOGIN_FAILURE,
-        payload: reason
-      }))
-  }
+      .then((json) => {
+        if (!json.token) {
+          throw new Error('Token has not benn provided!');
+        }
+        localStorage.setItem('token', json.token);
+        dispatch({
+          type: types.LOGIN_SUCCESS,
+          payload: json,
+        });
+      })
+
+      .catch(reason => dispatch({
+        type: types.LOGIN_FAILURE,
+        payload: reason,
+      }));
+  };
 }
 
 
 export function logout() {
   return (dispatch, getState) => {
-    
-    const { isFetching } = getState().services
+    const { isFetching } = getState().services;
 
     if (isFetching.logout) {
-      return Promise.resolve()
+      return Promise.resolve();
     }
-    
+
     dispatch({
-      type: types.LOGOUT_REQUEST
-    })
+      type: types.LOGOUT_REQUEST,
+    });
     return callApi('/logout')
-    .then(data => {
-      localStorage.removeItem('token')
-      dispatch({
-        type: types.LOGOUT_SUCCESS,
-        payload: data
+      .then((data) => {
+        localStorage.removeItem('token');
+        dispatch({
+          type: types.LOGOUT_SUCCESS,
+          payload: data,
+        });
+        return data;
       })
-      return data      
-    })
-    .catch( error => dispatch({
-      type: types.LOGOUT_FAILURE,
-      payload: error
-    }))
-  }
+      .catch(error => dispatch({
+        type: types.LOGOUT_FAILURE,
+        payload: error,
+      }));
+  };
 }
 
 export function receiveAuth() {
   return (dispatch, getState) => {
-    
-    const { isFetching } = getState().services
+    const { isFetching } = getState().services;
 
     if (isFetching.receiveAuth) {
-      return Promise.resolve()
+      return Promise.resolve();
     }
 
-    const { token } = getState().auth
+    const { token } = getState().auth;
 
     if (!token) {
       dispatch({
         type: types.RECEIVE_AUTH_FAILURE,
-      })
+      });
     }
 
-    return callApi('/users/me', token)     
-    .then(json => {
-      dispatch({
-        type: types.RECEIVE_AUTH_SUCCESS,
-        payload: json
+    return callApi('/users/me', token)
+      .then((json) => {
+        dispatch({
+          type: types.RECEIVE_AUTH_SUCCESS,
+          payload: json,
+        });
       })
-    })
-    .catch(error => {
-      dispatch({
-        type: types.RECEIVE_AUTH_FAILURE,
-        payload: error
-      })
-    })
-    
-  }
+      .catch((error) => {
+        dispatch({
+          type: types.RECEIVE_AUTH_FAILURE,
+          payload: error,
+        });
+      });
+  };
 }

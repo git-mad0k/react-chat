@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,9 +6,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Form, Field } from 'react-final-form'
-import TextField from './Forms/TextField'
- 
+import { Form, Field } from 'react-final-form';
+import TextField from './Forms/TextField';
+
 const FormDialog = ({ open, handleClose, submit }) => (
   <React.Fragment>
     <Dialog
@@ -18,18 +18,20 @@ const FormDialog = ({ open, handleClose, submit }) => (
     >
       <Form
         onSubmit={submit}
-        render={({ handleSubmit, reset, submitting, pristine, }) => (
+        render={({
+          handleSubmit, submitting, pristine,
+        }) => (
           <form onSubmit={handleSubmit}>
             <DialogTitle id="form-dialog-title">New Chat</DialogTitle>
             <DialogContent style={{ width: '400px' }}>
               <DialogContentText>
                 Enter name for new chat
-                </DialogContentText>
+              </DialogContentText>
               <Field
                 name="chat"
                 component={TextField}
-                label={"New chat name"}
-                placeholder={'New chat name'}
+                label="New chat name"
+                placeholder="New chat name"
                 autoComplete="title"
                 fullWidth
               />
@@ -37,16 +39,17 @@ const FormDialog = ({ open, handleClose, submit }) => (
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 Cancel
-            </Button>
-              <Button type='submit' color="primary" disabled={submitting || pristine}>
+              </Button>
+              <Button type="submit" color="primary" disabled={submitting || pristine}>
                 Create
-            </Button>
+              </Button>
             </DialogActions>
           </form>
-        )} />
+        )}
+      />
     </Dialog>
   </React.Fragment>
-)
+);
 
 
-export default FormDialog
+export default FormDialog;

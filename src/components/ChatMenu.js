@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -12,7 +12,7 @@ class ChatMenu extends React.Component {
     anchorEl: null,
   };
 
-  handleClick = event => {
+  handleClick = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -23,7 +23,9 @@ class ChatMenu extends React.Component {
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const { leaveChat, deleteChat, activeUser, disabled } = this.props
+    const {
+      leaveChat, deleteChat, activeUser, disabled,
+    } = this.props;
     return (
       <React.Fragment>
         <IconButton
@@ -32,7 +34,7 @@ class ChatMenu extends React.Component {
           aria-haspopup="true"
           onClick={this.handleClick}
           disabled={disabled}
-          style={{ color: '#ffffff'}}
+          style={{ color: '#ffffff' }}
         >
           <MoreVertIcon />
         </IconButton>
@@ -44,24 +46,27 @@ class ChatMenu extends React.Component {
           PaperProps={{
             style: {
               maxHeight: ITEM_HEIGHT * 4.5,
-              width: 200,             
+              width: 200,
             },
           }}
-        >         
-          {activeUser.isMember && 
+        >
+          {activeUser.isMember
+          && (
           <MenuItem onClick={leaveChat}>
             Leave
-          </MenuItem>} 
-          {activeUser.isCreator && 
+          </MenuItem>
+          )}
+          {activeUser.isCreator
+          && (
           <MenuItem onClick={deleteChat}>
             Delete
           </MenuItem>
+          )
           }
-         
+
         </Menu>
       </React.Fragment>
     );
   }
 }
-export default ChatMenu
-
+export default ChatMenu;

@@ -1,42 +1,44 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
-import MessageItem from './MessageItem'
 
-import  Typography from '@material-ui/core/Typography';
-import  Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import MessageItem from './MessageItem';
 
 const styles = theme => ({
   messagesWrapper: {
-    paddingTop: "56px",
-    overflowX: "auto",
-    paddingBottom: "130px",
-    width: "100%",
-    height: "100%"
+    paddingTop: '56px',
+    overflowX: 'auto',
+    paddingBottom: '130px',
+    width: '100%',
+    height: '100%',
   },
- 
+
   paper: {
-    padding: theme.spacing.unit * 3
-  }
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class MessageList extends React.Component {
   componentDidMount() {
-    this.scrollDownHistory()
+    this.scrollDownHistory();
   }
 
   componentDidUpdate() {
-    this.scrollDownHistory()
+    this.scrollDownHistory();
   }
 
   scrollDownHistory() {
-    const messagesWrapper = this.refs.messagesWrapper    
-    if (messagesWrapper) {
-      messagesWrapper.scrollTop = messagesWrapper.scrollHeight
+    if (this.messagesWrapper) {
+      this.messagesWrapper.scrollTop = this.messagesWrapper.scrollHeight;
     }
   }
+
   render() {
-    const { classes, messages, match, activeUser  } = this.props    
+    const {
+      classes, messages, match, activeUser,
+    } = this.props;
     if (!match.params.chatId) {
       return (
         <Paper className={classes.paper}>
@@ -44,26 +46,42 @@ class MessageList extends React.Component {
             Start messaging…
           </Typography>
           <Typography variant="body1" gutterBottom>
-            Use <strong>Global</strong> to explore communities around here.
+            Use
+            {' '}
+            <strong>Global</strong>
+            {' '}
+to explore communities around here.
           </Typography>
           <Typography variant="body1" gutterBottom>
-            Use <strong>Recents</strong> to see your recent conversations.
+            Use
+            {' '}
+            <strong>Recents</strong>
+            {' '}
+to see your recent conversations.
           </Typography>
         </Paper>
       );
     }
 
-    return messages && messages.length? (
-      <div className={classes.messagesWrapper} ref="messagesWrapper">
-        {messages && messages.map((message, i) =>
-          <MessageItem message={message} key={i} activeUser={activeUser} />
-        )}        
+    return messages && messages.length ? (
+      <div
+        className={classes.messagesWrapper}
+        ref={(wrapper) => { this.messagesWrapper = wrapper; }}
+      >
+        {messages && messages.map(message => (
+          <MessageItem
+            message={message}
+            // eslint-disable-next-line
+            key={message._id}
+            activeUser={activeUser}
+          />
+        ))}
       </div>
     ) : (
       <Typography variant="display1">
           There is no messages yet...
       </Typography>
-    )
+    );
   }
 }
-export default withRouter(withStyles(styles)(MessageList))
+export default withRouter(withStyles(styles)(MessageList));

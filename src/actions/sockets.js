@@ -1,137 +1,130 @@
-import SocketIOClient from 'socket.io-client'
-import * as types from '../constants/sockets'
+import SocketIOClient from 'socket.io-client';
+import * as types from '../constants/sockets';
 
-import { redirect } from './services'
-
+import { redirect } from './services';
 
 
 export function missingSocketConnection() {
   return {
     type: types.SOCKET_CONNECTION_MISSING,
-    payload: new Error('Missing connection')
-  }
+    payload: new Error('Missing connection'),
+  };
 }
 
-let socket = null
+let socket = null;
 
 export function socketsConnect() {
   return (dispatch, getState) => {
-    
-
-    const state = getState()
-    const { isFetching } = state.services
+    const state = getState();
+    const { isFetching } = state.services;
 
     if (isFetching.sockets) {
-      return Promise.resolve()
+      return Promise.resolve();
     }
 
-    const { token } = state.auth
+    const { token } = state.auth;
     dispatch({
-      type: types.SOCKET_CONNECTION_REQUEST
-    })
+      type: types.SOCKET_CONNECTION_REQUEST,
+    });
 
     socket = SocketIOClient('ws://localhost:8000', {
-      query: { token }
-    })
+      query: { token },
+    });
 
     socket.on('connect', () => {
       dispatch({
-        type: types.SOCKET_CONNECTION_SUCCESS
-      })
-    })
+        type: types.SOCKET_CONNECTION_SUCCESS,
+      });
+    });
     socket.on('error', (error) => {
       dispatch({
         type: types.SOCKET_CONNECTION_FAILURE,
         payload: new Error(`Connection ${error}`),
-      })
-    })
+      });
+    });
     socket.on('connect_error', () => {
       dispatch({
         type: types.SOCKET_CONNECTION_FAILURE,
-        payload: new Error('We have lost a connection :( ')
-      })
-    })
+        payload: new Error('We have lost a connection :( '),
+      });
+    });
 
     socket.on('new-message', (message) => {
       dispatch({
         type: types.RECIEVE_MESSAGE,
-        payload: message
-      })
-    })
+        payload: message,
+      });
+    });
     socket.on('new-chat', ({ chat }) => {
       dispatch({
         type: types.RECIEVE_NEW_CHAT,
-        payload: { chat }
-      })
-    })
+        payload: { chat },
+      });
+    });
     socket.on('deleted_chat', ({ chat }) => {
-      const { activeId } = getState().chats
+      const { activeId } = getState().chats;
       dispatch({
         type: types.RECIEVE_DELETED_CHAT,
         payload: { chat },
-      })
-
+      });
+      // eslint-disable-next-line
       if (chat._id === activeId._id) {
-        dispatch(redirect('/chat'))
+        dispatch(redirect('/chat'));
       }
-    })
-
-  }
+    });
+    return Promise.resolve();
+  };
 }
 
 export function sendMessage(content) {
   return (dispatch, getState) => {
-    const { activeId } = getState().chats
-    
+    const { activeId } = getState().chats;
+
     if (!socket) {
-      dispatch(missingSocketConnection())
+      dispatch(missingSocketConnection());
     }
 
-    socket.emit('send-message',{
+    socket.emit('send-message', {
       chatId: activeId,
-      content
+      content,
     }, () => {
       dispatch({
         type: types.SEND_MESSAGE,
         payload: {
           chatId: activeId,
-          content
-        }
-      })
-    })
-  }
+          content,
+        },
+      });
+    });
+  };
 }
 
 export function mountChat(chatId) {
   return (dispatch) => {
-
     if (!socket) {
-      dispatch(missingSocketConnection())
+      dispatch(missingSocketConnection());
     }
-    
-    socket.emit('mount-chat', chatId)
+
+    socket.emit('mount-chat', chatId);
 
 
     dispatch({
       type: types.MOUNT_CHAT,
-      payload: { chatId }
-    })
-
-  }
+      payload: { chatId },
+    });
+  };
 }
 export function unmountChat(chatId) {
   return (dispatch) => {
-
     if (!socket) {
-      dispatch(missingSocketConnection())
+      dispatch(missingSocketConnection());
     }
 
-    socket.emit('unmount-chat', chatId)
+    socket.emit('unmount-chat', chatId);
 
     dispatch({
       type: types.UNMOUNT_CHAT,
-      payload: { chatId }
-    })
-
-  }
+      payload: { chatId },
+    });
+  };
 }

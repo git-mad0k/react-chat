@@ -1,16 +1,18 @@
-import React from 'react'
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import blue from '@material-ui/core/colors/blue'
-import red from '@material-ui/core/colors/red'
-import pink from '@material-ui/core/colors/pink'
-import { Route, Switch, Redirect} from 'react-router-dom'
-import { Router } from 'react-router-dom'
-import history from '../utils/history'
-import PrivateRoute from '../containers/PrivateRoute'
-import ChatPage from '../containers/ChatPage'
-import WelcomePage from '../containers/WelcomePage'
-
-
+import React from 'react';
+import {
+  Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
+import red from '@material-ui/core/colors/red';
+import pink from '@material-ui/core/colors/pink';
+import history from '../utils/history';
+import ChatPage from '../containers/ChatPage';
+import WelcomePage from '../containers/WelcomePage';
+import PrivateRoute from '../containers/PrivateRoute';
 
 const theme = createMuiTheme({
   palette: {
@@ -36,7 +38,7 @@ const theme = createMuiTheme({
 
   typography: {
     fontSize: 14,
-  }
+  },
 });
 
 const Root = () => (
@@ -49,6 +51,6 @@ const Root = () => (
         <Redirect to="/" />
       </Switch>
     </MuiThemeProvider>
-  </Router> )
+  </Router>);
 
-export default withStyles(theme)(Root)
+export default withStyles(theme)(Root);

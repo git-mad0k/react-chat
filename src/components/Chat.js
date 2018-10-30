@@ -1,8 +1,8 @@
-import React from 'react'
-import MessageList from './MessageList'
-import { withStyles } from '@material-ui/core/styles'
-import NewMessage from './NewMessage'
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
+import MessageList from './MessageList';
+import NewMessage from './NewMessage';
 
 const styles = theme => ({
   content: {
@@ -12,25 +12,30 @@ const styles = theme => ({
     height: '100%',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-})
+});
 
-const Chat = ({ classes, messages, sendMessage, joinChat, activeUser, activeChat, isConnected }) => (
+const Chat = ({
+  classes, messages, sendMessage, joinChat, activeUser, activeChat, isConnected,
+}) => (
   <main className={classes.content}>
     <MessageList messages={messages} activeUser={activeUser} />
 
-    {activeChat && 
-      <NewMessage 
-        onSendMessage={sendMessage} 
-        onJoinChat={(chatId) => joinChat(activeChat._id)} 
+    {activeChat
+      && (
+      <NewMessage
+        onSendMessage={sendMessage}
+        // eslint-disable-next-line
+        onJoinChat={chatId => joinChat(activeChat._id)}
         activeUser={activeUser}
         showJoinBtn={!activeUser.isChatMember}
         disabled={!isConnected}
       />
+      )
     }
   </main>
-)
+);
 
 
-export default withRouter(withStyles(styles)(Chat))
+export default withRouter(withStyles(styles)(Chat));
