@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import RestoreIcon from '@material-ui/icons/Restore';
@@ -27,3 +28,9 @@ const SidebarMenu = ({ classes, activeTab, handleTabChange }) => (
 );
 
 export default withStyles(styles)(SidebarMenu);
+
+SidebarMenu.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  activeTab: PropTypes.number.isRequired,
+  handleTabChange: PropTypes.func.isRequired,
+};

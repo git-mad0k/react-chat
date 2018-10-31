@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
@@ -16,15 +17,23 @@ const styles = () => ({
 });
 
 class NewMessage extends React.Component {
+  static propTypes = {
+    onSendMessage: PropTypes.func.isRequired,
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    showJoinBtn: PropTypes.bool.isRequired,
+    onJoinChat: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
+  };
+
   state = {
     value: '',
-  }
+  };
 
   handleValueChange = (event) => {
     this.setState({
       value: event.target.value,
     });
-  }
+  };
 
   handleKeyPress = (event) => {
     const { value } = this.state;
@@ -37,7 +46,7 @@ class NewMessage extends React.Component {
         value: '',
       });
     }
-  }
+  };
 
   render() {
     const {
@@ -69,7 +78,7 @@ class NewMessage extends React.Component {
               onClick={onJoinChat}
             >
               {' '}
-Join
+              Join
             </Button>
           )}
         </Paper>

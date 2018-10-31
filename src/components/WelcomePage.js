@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -6,10 +7,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Redirect } from 'react-router-dom';
-import SignUp from './SignUp';
 import SignIn from './SignIn';
+import SignUp from './SignUp';
 import ErrorMessage from './ErrorMessage';
-
 
 const styles = theme => ({
   root: {
@@ -19,13 +19,8 @@ const styles = theme => ({
   layout: {
     width: 'auto',
     display: 'block', // Fix IE11 issue.
-    marginLeft: (theme.spacing.unit * 3),
-    marginRight: (theme.spacing.unit * 3),
-    [theme.breakpoints.up(400 + (theme.spacing.unit * 3 * 2))]: {
-      width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
   },
   indicator: {
     backgroundColor: theme.palette.primary.dark,
@@ -37,8 +32,7 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-around',
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
-      .spacing.unit * 3}px`,
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -54,19 +48,37 @@ const styles = theme => ({
 });
 
 class WelcomePage extends React.Component {
+  static propTypes = {
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
+    signup: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
+    receiveAuth: PropTypes.func.isRequired,
+    errorCloseMessage: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    error: PropTypes.instanceOf(Error),
+  };
+
+  static defaultProps = {
+    error: null,
+  };
+
   state = {
     tab: 'login',
   };
 
+  componentDidMount() {
+    this.props.receiveAuth();
+  }
+
   handleChange = (e, value) => {
     this.setState({ tab: value });
-  }
+  };
 
   handleSingUp = (values) => {
     const { signup } = this.props;
     const { username, password } = values;
     signup(username, password);
-  }
+  };
 
   render() {
     const {
@@ -86,10 +98,7 @@ class WelcomePage extends React.Component {
           direction="column"
           justify="center"
         >
-          <Grid
-            container
-            className={classes.layout}
-          >
+          <Grid container className={classes.layout}>
             <Paper className={classes.paper}>
               <AppBar position="static">
                 <Tabs

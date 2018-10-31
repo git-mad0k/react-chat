@@ -1,9 +1,8 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
-
 
 const styles = () => ({
   newChatWrapper: {
@@ -29,3 +28,9 @@ const NewChat = ({ classes, handleOpen, disabled }) => (
 );
 
 export default withStyles(styles)(NewChat);
+
+NewChat.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  handleOpen: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+};

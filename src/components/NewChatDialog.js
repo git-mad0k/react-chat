@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,22 +11,14 @@ import TextField from './Forms/TextField';
 
 const FormDialog = ({ open, handleClose, submit }) => (
   <React.Fragment>
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="form-dialog-title"
-    >
+    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
       <Form
         onSubmit={submit}
-        render={({
-          handleSubmit, submitting, pristine,
-        }) => (
+        render={({ handleSubmit, submitting, pristine }) => (
           <form onSubmit={handleSubmit}>
             <DialogTitle id="form-dialog-title">New Chat</DialogTitle>
             <DialogContent style={{ width: '400px' }}>
-              <DialogContentText>
-                Enter name for new chat
-              </DialogContentText>
+              <DialogContentText>Enter name for new chat</DialogContentText>
               <Field
                 name="chat"
                 component={TextField}
@@ -51,5 +43,10 @@ const FormDialog = ({ open, handleClose, submit }) => (
   </React.Fragment>
 );
 
-
 export default FormDialog;
+
+FormDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
+};

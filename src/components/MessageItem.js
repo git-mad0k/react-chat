@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import classnames from 'classnames';
@@ -68,45 +68,29 @@ const styles = () => ({
   },
 });
 
-const MessageItem = ({
-  classes, message, key, activeUser,
-}) => {
+const MessageItem = ({ classes, message, activeUser }) => {
   /* eslint-disable  */
   const isMessageForMe = message.sender._id === activeUser._id;
-  const colorForMe = message.sender._id === activeUser._id === 'me' ? 'red' : '';
+  const colorForMe = (message.sender._id === activeUser._id) === 'me' ? 'red' : '';
   /* eslint-enable  */
   if (message.statusMessage) {
     return (
       <div className={classes.userStatusWrapper}>
         <div className={classes.userName}>
-          {message.sender.username}
-          {' '}
-          <span className={classes.userStatus}>{message.content}</span>
+          {message.sender.username} <span className={classes.userStatus}>{message.content}</span>
         </div>
-        <div className={classes.userDateVisit}>
-          {' '}
-          {moment(message.createdAt).fromNow()}
-          {' '}
-        </div>
+        <div className={classes.userDateVisit}> {moment(message.createdAt).fromNow()} </div>
       </div>
     );
   }
 
   const {
-    messageWrapper,
-    messageContainer,
-    messageWrapperForMe,
-    messageContainerForMe,
+    messageWrapper, messageContainer, messageWrapperForMe, messageContainerForMe,
   } = classes;
   return (
-    <div
-      key={key}
-      className={classnames(messageWrapper, isMessageForMe && messageWrapperForMe)}
-    >
+    <div className={classnames(messageWrapper, isMessageForMe && messageWrapperForMe)}>
       <AvatarProfile name={message.sender.username} color={colorForMe} />
-      <Paper
-        className={classnames(messageContainer, isMessageForMe && messageContainerForMe)}
-      >
+      <Paper className={classnames(messageContainer, isMessageForMe && messageContainerForMe)}>
         <div className={classes.messageAuthor}>{message.sender.username}</div>
         <div className={classes.messageText}>{message.content}</div>
         <div className={classes.messageDate}>{moment(message.date).fromNow()}</div>
@@ -116,3 +100,21 @@ const MessageItem = ({
 };
 
 export default withStyles(styles)(MessageItem);
+
+MessageItem.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  message: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    content: PropTypes.string,
+  }).isRequired,
+  activeUser: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    username: PropTypes.string,
+    isMember: PropTypes.bool.isRequired,
+    isCreator: PropTypes.bool.isRequired,
+    isChatMember: PropTypes.bool.isRequired,
+  }).isRequired,
+};

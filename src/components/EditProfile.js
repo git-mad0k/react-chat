@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { PropTypes } from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -19,17 +19,11 @@ const EditProfile = ({
   };
   return (
     <React.Fragment>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <Form
           onSubmit={hanldeEditUser}
           initialValues={defaultData}
-          render={({
-            handleSubmit, submitting, pristine,
-          }) => (
+          render={({ handleSubmit, submitting, pristine }) => (
             <form onSubmit={handleSubmit}>
               <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
               <DialogContent style={{ width: '400px' }}>
@@ -74,5 +68,11 @@ const EditProfile = ({
   );
 };
 
-
 export default EditProfile;
+
+EditProfile.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  hanldeEditUser: PropTypes.func.isRequired,
+  user: PropTypes.objectOf(PropTypes.string).isRequired,
+};

@@ -1,10 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { receiveAuth } from '../actions';
 
 class PrivateRoute extends React.Component {
+  static propTypes = {
+    receiveAuth: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    component: PropTypes.func.isRequired,
+  };
   componentDidMount() {
     // eslint-disable-next-line
     const { receiveAuth } = this.props;
@@ -16,8 +22,8 @@ class PrivateRoute extends React.Component {
     return (
       <Route
         {...rest}
-        render={props => (
-          isAuthenticated ? (
+        render={props =>
+          (isAuthenticated ? (
             <Component {...props} />
           ) : (
             <Redirect
@@ -26,8 +32,8 @@ class PrivateRoute extends React.Component {
                 state: { from: props.location },
               }}
             />
-          )
-        )}
+          ))
+        }
       />
     );
   }
@@ -35,12 +41,15 @@ class PrivateRoute extends React.Component {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
-
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  receiveAuth,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      receiveAuth,
+    },
+    dispatch,
+  );
 
 export default withRouter(connect(
   mapStateToProps,

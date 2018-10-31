@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import Sidebar from './Sidebar';
@@ -6,7 +7,6 @@ import ChatHeader from './ChatHeader';
 import Chat from './Chat';
 import NewChatDialog from './NewChatDialog';
 import ErrorMessage from './ErrorMessage';
-
 
 const styles = () => ({
   root: {
@@ -23,6 +23,52 @@ const styles = () => ({
 });
 
 class ChatPage extends React.Component {
+  static propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.object.isRequired,
+    }).isRequired,
+    fetchMyChats: PropTypes.func.isRequired,
+    fetchAllChats: PropTypes.func.isRequired,
+    setActiveChat: PropTypes.func.isRequired,
+    socketsConnect: PropTypes.func.isRequired,
+    mountChat: PropTypes.func.isRequired,
+    joinChat: PropTypes.func.isRequired,
+    leaveChat: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+    sendMessage: PropTypes.func.isRequired,
+    deleteChat: PropTypes.func.isRequired,
+    editUser: PropTypes.func.isRequired,
+    errorCloseMessage: PropTypes.func.isRequired,
+    classes: PropTypes.PropTypes.objectOf(PropTypes.string).isRequired,
+    chats: PropTypes.shape({
+      active: PropTypes.object,
+      my: PropTypes.array.isRequired,
+      all: PropTypes.array.isRequired,
+    }).isRequired,
+    messages: PropTypes.arrayOf(PropTypes.shape({
+      chatId: PropTypes.string.isRequired,
+      content: PropTypes.string,
+      sender: PropTypes.object.isRequired,
+      createdAt: PropTypes.string.isRequired,
+    })).isRequired,
+    activeUser: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      username: PropTypes.string,
+      isMember: PropTypes.bool.isRequired,
+      isCreator: PropTypes.bool.isRequired,
+      isChatMember: PropTypes.bool.isRequired,
+    }).isRequired,
+    unmountChat: PropTypes.func.isRequired,
+    createChat: PropTypes.func.isRequired,
+    error: PropTypes.instanceOf(Error),
+    isConnected: PropTypes.bool.isRequired,
+  };
+
+  static defaultProps = {
+    error: null,
+  };
+
   static getDerivedStateFromProps(props, state) {
     const { params: nextParams } = props.match;
 
@@ -37,17 +83,19 @@ class ChatPage extends React.Component {
   state = {
     newChatDialog: false,
     params: '',
-  }
+  };
 
   componentDidMount() {
     const {
-      match, fetchMyChats, fetchAllChats, setActiveChat, socketsConnect, mountChat,
+      match,
+      fetchMyChats,
+      fetchAllChats,
+      setActiveChat,
+      socketsConnect,
+      mountChat,
     } = this.props;
 
-    Promise.all([
-      fetchMyChats(),
-      fetchAllChats(),
-    ])
+    Promise.all([fetchMyChats(), fetchAllChats()])
       .then(() => {
         socketsConnect();
       })
@@ -75,11 +123,11 @@ class ChatPage extends React.Component {
 
   handleOpenNewChatDialog = () => {
     this.setState({ newChatDialog: true });
-  }
+  };
 
   handleCloseNewChatDialog = () => {
     this.setState({ newChatDialog: false });
-  }
+  };
 
   handleCreateChat = (value) => {
     const { chat } = value;
@@ -88,12 +136,23 @@ class ChatPage extends React.Component {
     this.setState({
       newChatDialog: false,
     });
-  }
+  };
 
   render() {
     const {
-      classes, chats, joinChat, leaveChat, messages, logout,
-      sendMessage, activeUser, deleteChat, editUser, error, errorCloseMessage, isConnected,
+      classes,
+      chats,
+      joinChat,
+      leaveChat,
+      messages,
+      logout,
+      sendMessage,
+      activeUser,
+      deleteChat,
+      editUser,
+      error,
+      errorCloseMessage,
+      isConnected,
     } = this.props;
     const { newChatDialog } = this.state;
 

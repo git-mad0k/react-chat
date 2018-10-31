@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -21,6 +22,11 @@ const styles = theme => ({
 });
 
 class SignIn extends React.Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  };
+
   state = {
     username: {
       value: '',
@@ -47,8 +53,7 @@ class SignIn extends React.Component {
     e.preventDefault();
     const { username, password } = this.state;
     const { onSubmit } = this.props;
-    onSubmit(username.value, password.value)
-      .then(Promise.resolve());
+    onSubmit(username.value, password.value).then(Promise.resolve());
 
     this.setState({
       username: {
@@ -60,7 +65,7 @@ class SignIn extends React.Component {
         isValid: true,
       },
     });
-  }
+  };
 
   validate = () => {
     const { username, password } = this.state;

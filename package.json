@@ -11,6 +11,7 @@
     "immutable": "^3.8.2",
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.22.2",
+    "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-app-rewire-eslint": "^0.2.3",
     "react-app-rewire-polyfills": "^0.2.0",

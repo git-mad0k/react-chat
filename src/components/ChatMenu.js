@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,6 +8,19 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 const ITEM_HEIGHT = 48;
 
 class ChatMenu extends React.Component {
+  static propTypes = {
+    leaveChat: PropTypes.func.isRequired,
+    deleteChat: PropTypes.func.isRequired,
+    activeUser: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      username: PropTypes.string,
+      isMember: PropTypes.bool.isRequired,
+      isCreator: PropTypes.bool.isRequired,
+      isChatMember: PropTypes.bool.isRequired,
+    }).isRequired,
+    disabled: PropTypes.bool.isRequired,
+  };
   state = {
     anchorEl: null,
   };
@@ -50,20 +63,8 @@ class ChatMenu extends React.Component {
             },
           }}
         >
-          {activeUser.isMember
-          && (
-          <MenuItem onClick={leaveChat}>
-            Leave
-          </MenuItem>
-          )}
-          {activeUser.isCreator
-          && (
-          <MenuItem onClick={deleteChat}>
-            Delete
-          </MenuItem>
-          )
-          }
-
+          {activeUser.isMember && <MenuItem onClick={leaveChat}>Leave</MenuItem>}
+          {activeUser.isCreator && <MenuItem onClick={deleteChat}>Delete</MenuItem>}
         </Menu>
       </React.Fragment>
     );

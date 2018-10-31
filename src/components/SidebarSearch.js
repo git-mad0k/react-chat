@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 
@@ -25,3 +26,8 @@ const SidebarSearch = ({ classes, handleSearchChange }) => (
 );
 
 export default withStyles(styles)(SidebarSearch);
+
+SidebarSearch.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  handleSearchChange: PropTypes.func.isRequired,
+};

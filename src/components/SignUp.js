@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import LockIcon from '@material-ui/icons/LockOutlined';
@@ -6,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Form, Field } from 'react-final-form';
 import TextField from './Forms/TextField';
-
 
 const styles = theme => ({
   avatar: {
@@ -21,7 +21,6 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
 });
-
 
 const validate = ({ username, password, repeatPassword }) => {
   const errors = {};
@@ -38,7 +37,6 @@ const validate = ({ username, password, repeatPassword }) => {
   return errors;
 };
 
-
 const SignUp = ({ classes, onSubmit }) => (
   <React.Fragment>
     <Avatar className={classes.avatar}>
@@ -49,9 +47,7 @@ const SignUp = ({ classes, onSubmit }) => (
       onSubmit={onSubmit}
       initialValues={{ employed: true, stooge: 'larry' }}
       validate={validate}
-      render={({
-        handleSubmit, submitting, pristine,
-      }) => (
+      render={({ handleSubmit, submitting, pristine }) => (
         <form className={classes.form} onSubmit={handleSubmit}>
           <Field
             name="username"
@@ -88,7 +84,7 @@ const SignUp = ({ classes, onSubmit }) => (
             className={classes.submit}
             disabled={submitting || pristine}
           >
-              Sign up
+            Sign up
           </Button>
         </form>
       )}
@@ -96,5 +92,9 @@ const SignUp = ({ classes, onSubmit }) => (
   </React.Fragment>
 );
 
-
 export default withStyles(styles)(SignUp);
+
+SignUp.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
