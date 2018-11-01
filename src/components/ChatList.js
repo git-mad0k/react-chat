@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { withRouter } from 'react-router-dom';
 import ChatItem from './ChatItem';
 
 const styles = () => ({
@@ -41,7 +40,7 @@ const ChatList = ({
   </List>
 );
 
-export default withRouter(withStyles(styles)(ChatList));
+export default withStyles(styles)(ChatList);
 
 ChatList.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,

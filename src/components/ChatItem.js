@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import AvatarProfile from './AvatarProfile';
 
 const ChatItem = ({
@@ -10,7 +11,7 @@ const ChatItem = ({
 }) => (
   <ListItem button component={Link} to={`/chat/${chatId}`} selected={active} disabled={disabled}>
     <AvatarProfile name={title} color={color} />
-    <ListItemText primary={title} secondary={createdAt} />
+    <ListItemText primary={title} secondary={moment(createdAt).fromNow()} />
   </ListItem>
 );
 

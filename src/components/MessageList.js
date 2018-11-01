@@ -35,7 +35,7 @@ class MessageList extends React.Component {
         _id: PropTypes.string.isRequired,
       }),
       statusMessage: PropTypes.bool,
-      updatedAt: PropTypes.string.isRequired,
+      updatedAt: PropTypes.string,
       _id: PropTypes.string.isRequired,
     })),
     match: PropTypes.shape({

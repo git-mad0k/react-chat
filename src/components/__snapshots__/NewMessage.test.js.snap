@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewMeesage render correctly 1`] = `
+<div
+  className="NewMessage-newMessage-1"
+>
+  <div
+    className="MuiPaper-root-2 MuiPaper-elevation2-6 MuiPaper-rounded-3"
+  >
+    Button
+  </div>
+</div>
+`;
+
+exports[`NewMeesage render showJoin false 1`] = `
+<div
+  className="NewMessage-newMessage-1"
+>
+  <div
+    className="MuiPaper-root-2 MuiPaper-elevation2-6 MuiPaper-rounded-3"
+  >
+    <div
+      aria-describedby={undefined}
+      className="MuiFormControl-root-29 MuiFormControl-marginNormal-30 MuiFormControl-fullWidth-32"
+      onKeyPress={[Function]}
+      style={
+        Object {
+          "padding": 8,
+        }
+      }
+    >
+      <div
+        className="MuiInputBase-root-46 MuiInput-root-33 MuiInput-underline-37 MuiInputBase-fullWidth-55 MuiInput-fullWidth-40 MuiInputBase-formControl-47 MuiInput-formControl-34"
+        onClick={[Function]}
+      >
+        <input
+          aria-invalid={false}
+          autoComplete={undefined}
+          autoFocus={undefined}
+          className="MuiInputBase-input-56 MuiInput-input-41"
+          defaultValue={undefined}
+          disabled={false}
+          id="standard-full-width"
+          name={undefined}
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          onKeyDown={undefined}
+          onKeyUp={undefined}
+          placeholder="Type your message..."
+          readOnly={undefined}
+          required={false}
+          rows={undefined}
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MessageList /> reders correcty 1`] = `
+<div
+  className="MuiPaper-root-58 MuiPaper-elevation2-62 MuiPaper-rounded-59 MessageList-paper-57"
+>
+  <h1
+    className="MuiTypography-root-85 MuiTypography-display1-89 MuiTypography-gutterBottom-103"
+  >
+    Start messaging…
+  </h1>
+  <p
+    className="MuiTypography-root-85 MuiTypography-body1-94 MuiTypography-gutterBottom-103"
+  >
+    Use 
+    <strong>
+      Global
+    </strong>
+     to explore communities around here.
+  </p>
+  <p
+    className="MuiTypography-root-85 MuiTypography-body1-94 MuiTypography-gutterBottom-103"
+  >
+    Use 
+    <strong>
+      Recents
+    </strong>
+     to see your recent conversations.
+  </p>
+</div>
+`;
+
+exports[`<MessageList /> renders messages 1`] = `
+<div
+  className="MessageList-messagesWrapper-56"
+>
+  <div
+    className="MessageItem-userStatusWrapper-118"
+  >
+    <div
+      className="MessageItem-userName-119"
+    >
+      test
+       
+      <span
+        className="MessageItem-userStatus-120"
+      >
+        Hello, World!
+      </span>
+    </div>
+    <div
+      className="MessageItem-userDateVisit-121"
+    >
+       
+      2 days ago
+       
+    </div>
+  </div>
+  <div
+    className="MessageItem-userStatusWrapper-118"
+  >
+    <div
+      className="MessageItem-userName-119"
+    >
+      test
+       
+      <span
+        className="MessageItem-userStatus-120"
+      >
+        Hello, React!
+      </span>
+    </div>
+    <div
+      className="MessageItem-userDateVisit-121"
+    >
+       
+      2 days ago
+       
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<MessageList /> renders without messages 1`] = `
+<h1
+  className="MuiTypography-root-85 MuiTypography-display1-89"
+>
+  There is no messages yet...
+</h1>
+`;
