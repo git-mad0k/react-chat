@@ -18,9 +18,8 @@ const auth = (state = new SchemeRecord(), action) => {
         .set('user', action.payload.user)
         .set('token', action.payload.token);
     case types.RECEIVE_AUTH_SUCCESS:
-      return state
-        .set('isAuthenticated', true)
-        .set('user', action.payload.user);
+    case types.USER_EDIT_SUCCESS:
+      return state.set('isAuthenticated', true).set('user', action.payload.user);
     case types.SINGUP_FAILURE:
     case types.LOGIN_FAILURE:
     case types.RECEIVE_AUTH_FAILURE:
