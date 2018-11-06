@@ -46,7 +46,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { classes, chats, handleOpen, joinChat } = this.props
+    const { classes, chats, handleOpen, joinChat, activeChat, isConnected } = this.props
     const {activeTab} = this.state
     return (
       <Drawer
@@ -57,9 +57,20 @@ class Sidebar extends React.Component {
       >
         <SidebarSearch handleSearchChange={this.handleSearchChange}/>
         <Divider />
-        <ChatList chats={this.filterChat(activeTab === 0 ? chats.my : chats.all) } joinChat={joinChat} />
-        <NewChat handleOpen={handleOpen} />
-        <SidebarMenu activeTab={activeTab} handleTabChange={this.handleTabChange} />
+        <ChatList 
+          chats={this.filterChat(activeTab === 0 ? chats.my : chats.all) } 
+          joinChat={joinChat}
+          disabled={!isConnected}
+          activeChat={activeChat} 
+          />
+        <NewChat 
+          handleOpen={handleOpen}
+          disabled={!isConnected} 
+          />
+        <SidebarMenu 
+          activeTab={activeTab} 
+          handleTabChange={this.handleTabChange}          
+          />
       </Drawer>
     );
   }

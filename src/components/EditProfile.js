@@ -9,15 +9,11 @@ import { Form, Field } from 'react-final-form'
 import TextField from './Forms/TextField'
 
 const EditProfile = ({ open, handleClose, hanldeEditUser, user }) => {
-  const submitForm = values => {    
-    hanldeEditUser(values)
-    handleClose()
-  }
   const { username, lastName, firstName } = user
   const defaultData = {
-   username,
-   firstName,
-   lastName 
+    username,
+    firstName,
+    lastName
   }
   return (
     <React.Fragment>
@@ -27,7 +23,7 @@ const EditProfile = ({ open, handleClose, hanldeEditUser, user }) => {
         aria-labelledby="form-dialog-title"
       >
         <Form
-          onSubmit={submitForm}
+          onSubmit={hanldeEditUser}
           initialValues={defaultData}
           render={({ handleSubmit, reset, submitting, pristine, values}) => (
             <form onSubmit={handleSubmit}>

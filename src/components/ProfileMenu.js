@@ -32,9 +32,10 @@ class ProfileMenu extends React.Component {
   hanldeEditUser = data => {    
     this.props.editUser(data)
     const { user } = this.state
-    this.setState(
-      { user: Object.assign(user, data) }
-    )
+    this.setState({ user: Object.assign(user, data),
+        openDialog: false
+      })
+    
   }
 
   handleMenu = event => {
@@ -59,7 +60,7 @@ class ProfileMenu extends React.Component {
   }
 
   render() {
-    const { logOutHandler} = this.props
+    const { logOutHandler, disabled } = this.props
     const { anchorEl, openDialog, user } = this.state
     const open = Boolean(anchorEl)
 
@@ -69,6 +70,7 @@ class ProfileMenu extends React.Component {
           aria-haspopup="true"
           color="inherit"          
           onClick={this.handleMenu}
+          disabled={disabled}
         >
           <AccountCircle />
         </IconButton>

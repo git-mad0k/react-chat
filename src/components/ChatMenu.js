@@ -23,7 +23,7 @@ class ChatMenu extends React.Component {
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const { leaveChat, deleteChat, activeUser } = this.props
+    const { leaveChat, deleteChat, activeUser, disabled } = this.props
     return (
       <React.Fragment>
         <IconButton
@@ -31,6 +31,7 @@ class ChatMenu extends React.Component {
           aria-owns={open ? 'long-menu' : null}
           aria-haspopup="true"
           onClick={this.handleClick}
+          disabled={disabled}
           style={{ color: '#ffffff'}}
         >
           <MoreVertIcon />

@@ -40,7 +40,7 @@ class NewMessage extends React.Component {
   }
 
   render() {
-    const { classes, showJoinBtn, onJoinChat} = this.props
+    const { classes, showJoinBtn, onJoinChat, disabled} = this.props
     const { value } = this.state
 
     return (
@@ -52,6 +52,7 @@ class NewMessage extends React.Component {
             placeholder="Type your message..."
             fullWidth
             margin="normal"
+            disabled={disabled}
             value={value}
             onChange={this.handleValueChange}
             onKeyPress={this.handleKeyPress}
@@ -59,6 +60,7 @@ class NewMessage extends React.Component {
             fullWidth
             variant="raised"
             color="primary"
+            disabled={disabled}
             onClick={onJoinChat}
             >  Join
             </Button>)}

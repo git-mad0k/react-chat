@@ -14,11 +14,17 @@ const styles = theme => ({
   }
 })
 
-const NewChat = ({ classes, handleOpen }) => (
+const NewChat = ({ classes, handleOpen, disabled }) => (
   <div className={classes.newChatWrapper}>
-    <Button variant="fab" color="secondary" aria-label="Add" onClick={handleOpen}>
-      <AddIcon />
-      </Button>    
+    <Button 
+      variant="fab" 
+      color="secondary" 
+      aria-label="Add" 
+      onClick={handleOpen}
+      disabled={disabled}
+      >
+        <AddIcon />
+    </Button>    
   </div>
 )
 

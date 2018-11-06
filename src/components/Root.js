@@ -4,6 +4,8 @@ import blue from '@material-ui/core/colors/blue'
 import red from '@material-ui/core/colors/red'
 import pink from '@material-ui/core/colors/pink'
 import { Route, Switch, Redirect} from 'react-router-dom'
+import { Router } from 'react-router-dom'
+import history from '../utils/history'
 import PrivateRoute from '../containers/PrivateRoute'
 import ChatPage from '../containers/ChatPage'
 import WelcomePage from '../containers/WelcomePage'
@@ -26,9 +28,9 @@ const theme = createMuiTheme({
     action: {
       active: '#000',
       disabled: '#fff',
-      disabledBackground: blue[100],
+      disabledBackground: blue[900],
       cursor: 'disabled',
-      selected: '#000',
+      selected: blue[200],
     },
   },
 
@@ -37,7 +39,8 @@ const theme = createMuiTheme({
   }
 });
 
-const Root = () => ( 
+const Root = () => (
+  <Router history={history}>
     <MuiThemeProvider theme={theme}>
       <Switch>
         <Route exact path="/(welcome)?" component={WelcomePage} />
@@ -45,6 +48,7 @@ const Root = () => (
         <PrivateRoute path="/chat/:chatId?" component={ChatPage} />
         <Redirect to="/" />
       </Switch>
-    </MuiThemeProvider>)
+    </MuiThemeProvider>
+  </Router> )
 
 export default withStyles(theme)(Root)

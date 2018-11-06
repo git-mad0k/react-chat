@@ -8,6 +8,7 @@ import SignUp from './SignUp'
 import Grid from '@material-ui/core/Grid';
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Redirect } from 'react-router-dom'
+import ErrorMessage from './ErrorMessage';
 
 
 const styles = theme => ({
@@ -54,15 +55,21 @@ const styles = theme => ({
 
 class WelcomePage extends React.Component {
   state = {
-   tab: 'login'
+    tab: 'login'
   };
 
   handleChange = (e, value) => {
     this.setState({ tab: value })
   }
 
+  handleSingUp = values => {
+    const { signup } = this.props
+    const {username, password} = values
+    signup(username, password)
+  }
+
   render() {
-    const { classes, login, signup, isAuthenticated } = this.props;
+    const { classes, error, login, isAuthenticated, errorCloseMessage } = this.props;
     const { tab } = this.state
 
     if (isAuthenticated) {
@@ -89,10 +96,11 @@ class WelcomePage extends React.Component {
                 </Tabs>
               </AppBar>
               {tab === 'login' && <SignIn onSubmit={login} />}
-              {tab === 'register' && <SignUp onSubmit={signup} />}
+              {tab === 'register' && <SignUp onSubmit={this.handleSingUp} />}
             </Paper>
           </Grid>
         </Grid>
+        <ErrorMessage error={error} closeSneckBar={errorCloseMessage} />
       </React.Fragment>
     );
   }
