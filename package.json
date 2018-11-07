@@ -2,6 +2,7 @@
   "name": "react-chat",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mad0k-react-chat.herokuapp.com",
   "dependencies": {
     "@material-ui/core": "^3.1.2",
     "@material-ui/icons": "^3.0.1",
@@ -35,8 +36,7 @@
     "lint": "eslint 'src/**/*.js'",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier-eslint --write 'src/**/*.{js,json}'",
-    "precommit": "lint-staged",
-    "prepush": "npm test"
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
