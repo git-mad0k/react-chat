@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 class ErrorMessage extends React.Component {
   static propTypes = {
     error: PropTypes.instanceOf(Error),
+    closeSneckBar: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -23,12 +24,8 @@ class ErrorMessage extends React.Component {
     open: false,
   };
 
-  handleCloseSneckBar = () => {
-    this.setState({ open: false });
-  };
-
   render() {
-    const { error } = this.props;
+    const { error, closeSneckBar } = this.props;
     const { open } = this.state;
     if (!error) {
       return null;
@@ -46,12 +43,7 @@ class ErrorMessage extends React.Component {
           onClose={this.handleClose}
           message={error.message}
           action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleCloseSneckBar}
-            >
+            <IconButton key="close" aria-label="Close" color="inherit" onClick={closeSneckBar}>
               <CloseIcon />
             </IconButton>,
           ]}
