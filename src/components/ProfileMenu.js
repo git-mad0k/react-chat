@@ -1,74 +1,82 @@
-import React from 'react'
-import IconButton from "@material-ui/core/IconButton";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+import React from 'react';
+import PropTypes from 'prop-types';
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import EditProfile from './EditProfile';
 
 class ProfileMenu extends React.Component {
-
+  static propTypes = {
+    activeUser: PropTypes.shape({
+      username: PropTypes.string,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+    }).isRequired,
+    editUser: PropTypes.func.isRequired,
+    logOutHandler: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
+  };
   state = {
     anchorEl: null,
     openDialog: false,
-    user: {
-      username: '',
-      firstName: '',
-      lastName: '',
-      user: {
-        username:'',
-        firstName: '',
-        lastName: ''
-      }
-    }
-  }
+    username: '',
+    firstName: '',
+    lastName: '',
+  };
 
   componentWillReceiveProps(nextProps) {
-    const { user } = this.state    
-    this.setState(
-      { user: Object.assign(user, nextProps.activeUser)}
-    )
+    this.setState({
+      username: nextProps.activeUser.username,
+      firstName: nextProps.activeUser.firstName,
+      lastName: nextProps.activeUser.lastName,
+    });
   }
 
-  hanldeEditUser = data => {    
-    this.props.editUser(data)
-    const { user } = this.state
-    this.setState({ user: Object.assign(user, data),
-        openDialog: false
-      })
-    
-  }
+  hanldeEditUser = (data) => {
+    const { username, firstName, lastName } = data;
+    this.setState({
+      username,
+      firstName,
+      lastName,
+    });
+    this.props.editUser(data);
+    this.handleCloseDialog();
+  };
 
-  handleMenu = event => {
+  handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget });
-  }
+  };
 
   handleClose = () => {
-    this.setState({ anchorEl: null })
-  }
-
+    this.setState({ anchorEl: null });
+  };
 
   handleOpenDialog = () => {
-    this.setState ({
-      openDialog:true 
-    })
-    this.handleClose()
-  }
+    this.setState({
+      openDialog: true,
+    });
+    this.handleClose();
+  };
+
   handleCloseDialog = () => {
-    this.setState ({
-      openDialog:false 
-    })
-  }
+    this.setState({
+      openDialog: false,
+    });
+  };
 
   render() {
-    const { logOutHandler, disabled } = this.props
-    const { anchorEl, openDialog, user } = this.state
-    const open = Boolean(anchorEl)
+    const { logOutHandler, disabled } = this.props;
+    const {
+      anchorEl, openDialog, username, firstName, lastName,
+    } = this.state;
+    const open = Boolean(anchorEl);
 
-    return(
+    return (
       <React.Fragment>
         <IconButton
           aria-haspopup="true"
-          color="inherit"          
+          color="inherit"
           onClick={this.handleMenu}
           disabled={disabled}
         >
@@ -91,11 +99,15 @@ class ProfileMenu extends React.Component {
           <MenuItem onClick={this.handleOpenDialog}>Profile</MenuItem>
           <MenuItem onClick={logOutHandler}>Logout</MenuItem>
         </Menu>
-        <EditProfile user={user} handleClose={this.handleCloseDialog} open={openDialog} hanldeEditUser={data=> this.hanldeEditUser(data)} />
+        <EditProfile
+          user={{ username, firstName, lastName }}
+          handleClose={this.handleCloseDialog}
+          open={openDialog}
+          hanldeEditUser={data => this.hanldeEditUser(data)}
+        />
       </React.Fragment>
-
-    )
+    );
   }
 }
 
-export default ProfileMenu
+export default ProfileMenu;

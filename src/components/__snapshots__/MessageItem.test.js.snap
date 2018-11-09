@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageItem redner no user message 1`] = `
+<div
+  className="MessageItem-messageWrapper-47"
+>
+  <div
+    className="MuiAvatar-root-53 MuiAvatar-colorDefault-54"
+    style={
+      Object {
+        "backgroundColor": "#2196f3",
+      }
+    }
+  >
+    T
+  </div>
+  <div
+    className="MuiPaper-root-56 MuiPaper-elevation2-60 MuiPaper-rounded-57 MessageItem-messageContainer-45"
+  >
+    <div
+      className="MessageItem-messageAuthor-42"
+    >
+      test2
+    </div>
+    <div
+      className="MessageItem-messageText-43"
+    >
+      test content 1
+    </div>
+    <div
+      className="MessageItem-messageDate-44"
+    >
+      a few seconds ago
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MessageItem render corretly  1`] = `
+<div
+  className="MessageItem-messageWrapper-47 MessageItem-messageWrapperForMe-48"
+>
+  <div
+    className="MuiAvatar-root-53 MuiAvatar-colorDefault-54"
+    style={
+      Object {
+        "backgroundColor": "#2196f3",
+      }
+    }
+  >
+    T
+  </div>
+  <div
+    className="MuiPaper-root-56 MuiPaper-elevation2-60 MuiPaper-rounded-57 MessageItem-messageContainer-45 MessageItem-messageContainerForMe-46"
+  >
+    <div
+      className="MessageItem-messageAuthor-42"
+    >
+      test2
+    </div>
+    <div
+      className="MessageItem-messageText-43"
+    >
+      test content 1
+    </div>
+    <div
+      className="MessageItem-messageDate-44"
+    >
+      a few seconds ago
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MessageItem render user is joined  1`] = `
+<div
+  className="MessageItem-userStatusWrapper-49"
+>
+  <div
+    className="MessageItem-userName-50"
+  >
+    test2
+     
+    <span
+      className="MessageItem-userStatus-51"
+    >
+      joined
+    </span>
+  </div>
+  <div
+    className="MessageItem-userDateVisit-52"
+  >
+     
+    8 months ago
+     
+  </div>
+</div>
+`;

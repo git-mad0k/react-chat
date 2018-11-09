@@ -1,1 +1,2 @@
-export const ERROR_MESSAGE_CLOSE = Symbol('errors/ERROR_MESSAGE_CLOSE')
+// eslint-disable-next-line
+export const ERROR_MESSAGE_CLOSE = Symbol('errors/ERROR_MESSAGE_CLOSE');

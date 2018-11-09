@@ -1,31 +1,37 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-
 class ErrorMessage extends React.Component {
+  static propTypes = {
+    error: PropTypes.instanceOf(Error),
+  };
+
+  static defaultProps = {
+    error: null,
+  };
+
+  static getDerivedStateFromProps(props) {
+    if (props.error) {
+      return { open: true };
+    }
+    return null;
+  }
   state = {
     open: false,
   };
 
-  handleCloseSneckBar = (event, reason) => {   
+  handleCloseSneckBar = () => {
     this.setState({ open: false });
-    // this.props.closeSneckBar()
   };
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.error) {
-      this.setState({ open: true })
-    }
-  }
 
   render() {
     const { error } = this.props;
-    
+    const { open } = this.state;
     if (!error) {
-      return null
+      return null;
     }
 
     return (
@@ -35,15 +41,15 @@ class ErrorMessage extends React.Component {
             vertical: 'bottom',
             horizontal: 'left',
           }}
-          open={this.state.open}
+          open={open}
           autoHideDuration={6000}
-          onClose={this.handleClose}          
+          onClose={this.handleClose}
           message={error.message}
-          action={[            
+          action={[
             <IconButton
               key="close"
               aria-label="Close"
-              color="inherit"             
+              color="inherit"
               onClick={this.handleCloseSneckBar}
             >
               <CloseIcon />
@@ -54,6 +60,5 @@ class ErrorMessage extends React.Component {
     );
   }
 }
-
 
 export default ErrorMessage;

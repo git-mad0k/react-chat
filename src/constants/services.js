@@ -1,1 +1,2 @@
-export const REDIRECT = Symbol('services/REDIRECT')
+/* eslint-disable */
+export const REDIRECT = Symbol('services/REDIRECT');
