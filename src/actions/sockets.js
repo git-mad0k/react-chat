@@ -1,8 +1,8 @@
 import SocketIOClient from 'socket.io-client';
 import * as types from '../constants/sockets';
+import config from '../config';
 
 import { redirect } from './services';
-
 
 export function missingSocketConnection() {
   return {
@@ -27,7 +27,7 @@ export function socketsConnect() {
       type: types.SOCKET_CONNECTION_REQUEST,
     });
 
-    socket = SocketIOClient('ws://localhost:8000', {
+    socket = SocketIOClient(config.SOCKETS_URI, {
       query: { token },
     });
 
@@ -84,18 +84,22 @@ export function sendMessage(content) {
       dispatch(missingSocketConnection());
     }
 
-    socket.emit('send-message', {
-      chatId: activeId,
-      content,
-    }, () => {
-      dispatch({
-        type: types.SEND_MESSAGE,
-        payload: {
-          chatId: activeId,
-          content,
-        },
-      });
-    });
+    socket.emit(
+      'send-message',
+      {
+        chatId: activeId,
+        content,
+      },
+      () => {
+        dispatch({
+          type: types.SEND_MESSAGE,
+          payload: {
+            chatId: activeId,
+            content,
+          },
+        });
+      },
+    );
   };
 }
 
@@ -106,7 +110,6 @@ export function mountChat(chatId) {
     }
 
     socket.emit('mount-chat', chatId);
-
 
     dispatch({
       type: types.MOUNT_CHAT,
